@@ -63,8 +63,8 @@ Nos projetos, troque `exercise:` por `project:` (`eda`, `classification`, `regre
 ## Colocando uma entrega no menu
 
 Um item de menu por entrega, em `mkdocs.yml`. O alvo pode ser Markdown, notebook `.ipynb`
-ou um link do Colab — os três exemplos estão em
-[Exemplos de uso](../examples/index.md).
+ou um link do Colab. A seção de exemplos que acompanhava o template foi removida deste
+repositório — veja a `nav` do próprio `mkdocs.yml` para o formato de cada item.
 
 ## Antes de publicar
 

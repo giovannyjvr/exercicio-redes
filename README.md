@@ -16,21 +16,25 @@ Site publicado: <https://giovannyjvr.github.io/exercicio-redes/>
 ```bash
 python -m pip install -r requirements.txt
 python docs/exercises/data/code/run_all.py
+python docs/exercises/data/code/validate.py
 mkdocs build --strict
 ```
 
-`run_all.py` regenera as seis figuras em `docs/exercises/data/figures/` e imprime
-todas as métricas citadas no relatório.
+`run_all.py` regenera as seis figuras em `docs/exercises/data/figures/`, imprime
+todas as métricas citadas no relatório e as grava em
+`docs/exercises/data/results/metrics.json`. `validate.py` confere as 21
+verificações técnicas exigidas pelo enunciado.
 
 ### Dataset do Exercise 3
 
 O Exercise 3 usa o `train.csv` rotulado da competição
 [Spaceship Titanic](https://www.kaggle.com/competitions/spaceship-titanic/data).
-O arquivo precisa estar em:
+O arquivo já está versionado em `docs/exercises/data/data/train.csv` (8693 linhas,
+14 colunas), para que a análise rode a partir de um clone limpo.
 
-```
-docs/exercises/data/data/train.csv
-```
+Se precisar repor o arquivo, baixe-o pela página da competição e salve-o
+exatamente nesse caminho — `load_dataset` confere o esquema e falha com uma
+mensagem explícita se o arquivo não estiver lá.
 
 ## Preview local do site
 
