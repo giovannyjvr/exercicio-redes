@@ -26,8 +26,7 @@ ai_use: "Claude Code (Anthropic) foi utilizado para interpretar os requisitos, g
     verificações técnicas exigidas pelo enunciado (contagens, formas, ausência de
     vazamento, `NaN` e infinitos, figuras e integridade do relatório).
 
-## Estrutura do código
-
+**Estrutura do código.**
 O código vive em [`code/`](https://github.com/giovannyjvr/exercicio-redes/tree/main/docs/exercises/data/code)
 como arquivos reais e é incluído neste relatório pelo próprio arquivo, via `--8<--`:
 relatório e repositório nunca saem de sincronia.
