@@ -1,0 +1,6 @@
+# O train.csv precisa chegar byte-a-byte igual ao arquivo oficial do Kaggle
+# em qualquer sistema: sem conversao de fim de linha.
+*.csv -text
+
+# Figuras
+*.png binary
