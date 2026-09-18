@@ -3,3 +3,6 @@ env/
 .cache/
 .vscode/
 target/
+# Python
+__pycache__/
+*.py[cod]
