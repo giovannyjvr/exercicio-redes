@@ -84,16 +84,22 @@ def main() -> int:
 
     print("\nExercise 2")
     X_i, y_i = exercise2.sample_dataset_i(rng)
-    X_ii, y_ii = exercise2.sample_dataset_ii(rng)
+    X_ii, y_ii, shells = exercise2.sample_dataset_ii(rng)
     checklist.check(
         "500 observações por classe nos dois datasets",
         np.bincount(y_i).tolist() == [500, 500] and np.bincount(y_ii).tolist() == [500, 500],
     )
     checklist.check("dimensionalidade igual a 5", X_i.shape[1] == 5 and X_ii.shape[1] == 5)
-    directions = exercise2.random_unit_directions(rng, 2000)
-    deviation = float(np.abs(np.linalg.norm(directions, axis=1) - 1.0).max())
+    deviation = shells["unit_norm_max_deviation"]
     checklist.check(
-        "direções unitárias com norma 1", deviation < 1e-12, f"desvio máximo {deviation:.1e}"
+        "direções unitárias com norma 1 (as usadas no dataset)",
+        deviation < 1e-12,
+        f"desvio máximo {deviation:.1e}",
+    )
+    checklist.check(
+        "nenhum raio negativo nas cascas",
+        shells["negative_rho_c"] == 0 and shells["negative_rho_d"] == 0,
+        f"rho mínimo {shells['min_rho_c']:.4f} (C) e {shells['min_rho_d']:.4f} (D)",
     )
     checklist.check(
         "PCA com duas componentes nos dois datasets",

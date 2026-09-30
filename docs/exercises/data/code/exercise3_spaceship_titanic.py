@@ -172,6 +172,19 @@ def preprocess(X_train_raw: pd.DataFrame, X_test_raw: pd.DataFrame) -> dict[str,
         negatives = (frame[log_columns] < 0).to_numpy().sum()
         assert negatives == 0, "log1p exige valores >= 0; há gastos negativos nos dados"
     foodcourt_before = X_train["FoodCourt"].to_numpy(dtype=float).copy()
+
+    # Quanto o escalonamento comprimiria FoodCourt SEM o log — é o número que
+    # sustenta, no relatório, a afirmação de que o log1p é a decisão de maior
+    # impacto. Simula o MinMax para [-1, 1] direto sobre os valores brutos.
+    raw_scaled = 2.0 * (foodcourt_before / foodcourt_before.max()) - 1.0
+    compression_without_log = {
+        "share_below_-0.99": float((raw_scaled < -0.99).mean()),
+        "share_below_-0.90": float((raw_scaled < -0.90).mean()),
+        # Onde cairia um passageiro que gastou 500 (acima da média do treino).
+        "scaled_value_of_500": float(2.0 * (500.0 / foodcourt_before.max()) - 1.0),
+        "max_raw": float(foodcourt_before.max()),
+    }
+
     for frame in (X_train, X_test):
         frame[log_columns] = np.log1p(frame[log_columns].to_numpy(dtype=float))
     foodcourt_after = X_train["FoodCourt"].to_numpy(dtype=float).copy()
@@ -211,6 +224,7 @@ def preprocess(X_train_raw: pd.DataFrame, X_test_raw: pd.DataFrame) -> dict[str,
         "categorical_modes": dict(zip(CATEGORICAL_COLUMNS, categorical_imputer.statistics_.tolist())),
         "foodcourt_before": foodcourt_before,
         "foodcourt_after": foodcourt_after,
+        "compression_without_log": compression_without_log,
     }
 
 
@@ -339,10 +353,17 @@ def run() -> dict[str, Any]:
     print(f"  Faixa treino: [{checks['min_train']:.4f}, {checks['max_train']:.4f}]")
     print(f"  Faixa teste : [{checks['min_test']:.4f}, {checks['max_test']:.4f}]")
 
+    compression = prepared["compression_without_log"]
+    print("\nSe FoodCourt fosse escalonado SEM o log1p:")
+    print(f"  {compression['share_below_-0.99'] * 100:.2f}% do treino cairia abaixo de -0.99")
+    print(f"  {compression['share_below_-0.90'] * 100:.2f}% do treino cairia abaixo de -0.90")
+    print(f"  um gasto de 500 viraria {compression['scaled_value_of_500']:.4f}")
+
     return {
         "overview": overview,
         "split": {k: v for k, v in parts.items() if k not in {"X_train", "X_test", "y_train", "y_test"}},
         "foodcourt_train_raw": foodcourt_train,
+        "compression_without_log": prepared["compression_without_log"],
         "numeric_medians": prepared["numeric_medians"],
         "categorical_modes": prepared["categorical_modes"],
         "feature_names": prepared["feature_names"],

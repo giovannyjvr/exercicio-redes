@@ -73,6 +73,12 @@ estiver lá.
     --8<-- "docs/exercises/data/code/common.py"
     ```
 
+??? note "`validate.py` — verificações técnicas"
+
+    ``` { .python .copy .select linenums='1' title="docs/exercises/data/code/validate.py" }
+    --8<-- "docs/exercises/data/code/validate.py"
+    ```
+
 ## Exercise 1
 
 ### A — Generate the clouds
@@ -106,6 +112,9 @@ uma rede treinada poderia aprender, não como resultado de um ajuste.
 
 **Verificações executadas pelo código:** as quatro amostras têm forma $(400, 2)$ e
 contagem $[100, 100, 100, 100]$ por classe.
+
+*Código: `exercise1_point_clouds.py` → `generate()` e `figure_01()` (incluído na
+íntegra no item B).*
 
 ### B — More or less spread out
 
@@ -172,6 +181,9 @@ de novo, sem treinar modelo algum.
 percentual nos quatro valores medidos.
 ///
 
+*Código: `exercise1_point_clouds.py` — abaixo, na íntegra. As funções deste item são
+`generate()`, `separation_ratios()`, `mixing_rate()`, `figure_02()` e `figure_03()`.*
+
 ??? note "`exercise1_point_clouds.py` — código do Exercise 1"
 
     ``` { .python .copy .select linenums='1' title="docs/exercises/data/code/exercise1_point_clouds.py" }
@@ -179,6 +191,33 @@ percentual nos quatro valores medidos.
     ```
 
 ### C — Analysis
+
+*Código: `exercise1_point_clouds.py` → `separation_ratios()`, `mixing_rate()` e
+`mixing_by_pair()` (incluído na íntegra no item B).*
+
+#### Como as quatro classes se sobrepõem em $s = 1$
+
+A tabela de $r_{ij}$ diz *quais* pares deveriam se confundir; a *mixing rate*
+decomposta por par diz quais de fato se confundem. Os 29 erros de $s = 1$ se
+distribuem assim:
+
+| Par de classes | Erros | % dos 29 erros | $r_{ij}$ do par |
+|---|---:|---:|---:|
+| 0 ↔ 1 | 27 | **93.1 %** | 1.3258 (o menor) |
+| 0 ↔ 2 | 1 | 3.4 % | 2.4802 |
+| 1 ↔ 2 | 1 | 3.4 % | 2.3800 |
+| qualquer par com a classe 3 | 0 | 0.0 % | ≥ 3.5422 |
+
+A leitura é direta: **quase toda a sobreposição em $s = 1$ está entre as classes 0
+e 1**, exatamente o par de menor $r_{ij}$. A classe 2 encosta de raspão nas duas
+(um erro para cada lado) e a classe 3, cujo menor $r_{ij}$ é 3.5422, fica
+completamente isolada — nenhum dos 100 pontos dela é atribuído a outra classe, nem
+nenhum ponto de outra classe é atribuído a ela. É isso que a Figura 1 mostra: três
+nuvens à esquerda com uma zona de contato entre 0 e 1, e a classe 3 sozinha à
+direita.
+
+Isso confirma que $r_{ij}$ é preditivo, e não apenas descritivo: a ordem dos pares
+pela razão de separação é a mesma ordem pela contagem de erros.
 
 #### A partir de qual escala as fronteiras lineares deixam de resolver o problema
 
@@ -315,8 +354,13 @@ diferentes do espaço.
    $\rho \sim \mathcal{N}(5.0,\ 0.4)$. O ponto final é $x = \rho \, u$.
 
 Os raios **não** são convertidos para valor absoluto: isso truncaria a distribuição
-especificada. Com $\rho$ a cinco desvios de zero, a fração de raios negativos é
-desprezível, e nenhum apareceu nesta execução.
+especificada. Com $\rho$ a cinco desvios de zero, a fração esperada de raios
+negativos é desprezível — e o código **verifica isso no ato da geração**, contando
+os $\rho < 0$ antes de multiplicar pela direção. A verificação é necessária porque
+depois da multiplicação ela seria impossível: como $\lVert x \rVert = \lvert \rho
+\rvert$, um raio negativo ficaria indistinguível de um positivo no resultado final.
+Nesta execução: **0 raios negativos** nas duas classes, com $\rho$ mínimo de 0.7522
+(classe C) e 3.4449 (classe D).
 
 !!! note "Leitura de $\mathcal{N}(2.0,\ 0.4)$"
 
@@ -330,8 +374,12 @@ Aqui a informação de classe está no **raio**, não na posição: as duas clas
 concêntricas.
 
 **Verificações executadas pelo código:** ambos os datasets têm forma $(1000, 5)$
-com 500 pontos por classe, e as direções sorteadas têm norma 1 com desvio máximo de
-$2.2 \times 10^{-16}$ (o próprio épsilon da máquina).
+com 500 pontos por classe, e as 1000 direções **efetivamente usadas** para construir
+o Dataset II têm norma 1 com desvio máximo de $3.3 \times 10^{-16}$ — a ordem de
+grandeza do épsilon da máquina, isto é, erro de arredondamento e nada mais.
+
+*Código: `exercise2_high_dim.py` → `sample_dataset_i()`, `random_unit_directions()`
+e `sample_dataset_ii()` (incluído na íntegra no item C).*
 
 ### C — Visualize and compare
 
@@ -381,6 +429,9 @@ bastante sobrepostos. **Direita:** Dataset II, dois picos praticamente disjuntos
 | II | C | 2.0039 | 0.4113 | [0.7522, 3.2796] |
 | II | D | 5.0175 | 0.4055 | [3.4449, 6.2403] |
 
+*Código: `exercise2_high_dim.py` → `project_2d()`, `center_distance()`,
+`radius_stats()`, `figure_04()` e `figure_05()` — abaixo, na íntegra.*
+
 **Qual projeção preserva melhor a informação relevante à classificação?** A do
 **Dataset I**. Duas leituras sustentam isso. Primeiro, ela retém mais variância
 total: 67.35 % contra 42.27 %. Segundo — e mais importante —, na Figura 4 o eixo
@@ -405,6 +456,21 @@ isotrópica.
     ```
 
 ### D — Analysis
+
+*Código: `exercise2_high_dim.py` → `center_distance()`, `project_2d()` e
+`radius_stats()` (incluído na íntegra no item C).*
+
+#### Em qual dataset a projeção preserva melhor a informação de classificação
+
+**No Dataset I**, e a resposta completa, com os números, está no item C. Em resumo:
+a projeção do Dataset I retém 67.35 % da variância contra 42.27 % do Dataset II, e —
+o que mais importa — o eixo PC1 do Dataset I quase coincide com a direção que separa
+as classes, de modo que um corte em PC1 já classificaria a maioria dos pontos. No
+Dataset II a informação de classe **sobrevive** à projeção (o anel é visível na
+Figura 4), mas em uma forma que nenhuma fronteira linear sobre PC1/PC2 consegue usar.
+
+Essa distinção — informação preservada versus informação *linearmente utilizável* —
+é o fio que liga as três respostas seguintes.
 
 #### Por que centros quase coincidentes e raios separados condenam o hiperplano
 
@@ -596,9 +662,14 @@ a 458. Duas conclusões diretas:
 
 É por isso que as decisões de pré-processamento do item C são as que são: a
 imputação usa a **mediana** (a média seria arrastada pela cauda) e as colunas de
-gasto passam por **`log1p`** antes do escalonamento. Sem o log, um MinMax comprimiria
-99 % dos passageiros num intervalo minúsculo perto de $-1$ só para acomodar o
-passageiro que gastou 29 813.
+gasto passam por **`log1p`** antes do escalonamento. O código mede o tamanho do
+problema: escalonando `FoodCourt` para $[-1, 1]$ **sem** o log, **78.26 %** dos
+passageiros do treino cairiam abaixo de $-0.99$ e **92.52 %** abaixo de $-0.90$ —
+quase todo o conjunto espremido na borda inferior da faixa, só para acomodar o
+passageiro que gastou 29 813. O item D retoma esse número.
+
+*Código: `exercise3_spaceship_titanic.py` → `load_dataset()` e `describe_dataset()`
+(incluído na íntegra no item C).*
 
 ### B — Split before you transform
 
@@ -625,9 +696,14 @@ X_train, X_test, y_train, y_test = train_test_split(
 | Treino | 6954 | 3502 | **50.3595 %** |
 | Teste | 1739 | 876 | **50.3738 %** |
 
-As três proporções batem até a segunda casa decimal — a maior diferença em relação
-ao conjunto completo é de **0.011 ponto percentual**. Os tamanhos também conferem:
-$6954 + 1739 = 8693$, e $1739 / 8693 = 20.005\ \%$.
+A estratificação funcionou: a maior diferença entre quaisquer duas das três
+proporções é de **0.0143 ponto percentual** (treino 50.3595 % contra teste
+50.3738 %), e cada uma delas fica a menos de 0.012 ponto percentual da proporção do
+conjunto completo. Os tamanhos também conferem: $6954 + 1739 = 8693$, e
+$1739 / 8693 = 20.005\ \%$.
+
+*Código: `exercise3_spaceship_titanic.py` → `split()` (incluído na íntegra no
+item C).*
 
 #### Por que ajustar transformações antes do split causa data leakage
 
@@ -742,6 +818,9 @@ As **colunas one-hot ficam de fora do scaler** e permanecem em $0/1$. Elas já e
 numa escala pequena e comparável, e reescalá-las só distorceria a interpretação de
 "categoria ausente / presente".
 
+*Código: `exercise3_spaceship_titanic.py` → `preprocess()` — abaixo, na íntegra. A
+ordem numerada acima corresponde, linha a linha, aos blocos comentados da função.*
+
 ??? note "`exercise3_spaceship_titanic.py` — código do Exercise 3"
 
     ``` { .python .copy .select linenums='1' title="docs/exercises/data/code/exercise3_spaceship_titanic.py" }
@@ -765,6 +844,10 @@ visualização, o que é exatamente o problema. No painel da direita, depois do 
 a distribuição se abre: continua havendo um pico em 0 (os passageiros que não
 gastaram nada, que o `log1p` mantém em 0), mas os demais se distribuem de forma
 legível entre 1 e 10.
+
+*Código: `exercise3_spaceship_titanic.py` → `figure_06()` e `final_checks()`
+(incluído na íntegra no item C); `validate.py` repete as verificações de forma
+independente.*
 
 #### Verificações finais
 
@@ -829,14 +912,21 @@ a condição prática que se quer garantir antes de treinar.
 a rede enxerga, e o motivo aparece quando se imagina o pipeline sem ela.
 
 Sem o `log1p`, o `MinMaxScaler` teria que acomodar `FoodCourt` de 0 a 29 813 dentro
-de $[-1, 1]$. Como a mediana é 0 e mais da metade dos passageiros gastou nada, o
-resultado seria uma coluna em que **mais de 50 % dos valores ficam exatamente em
-$-1$** e praticamente todos os demais se amontoam nos primeiros milésimos acima
-disso — um passageiro que gastou 500 (acima da média!) seria mapeado para $-0.966$,
-indistinguível de quem gastou 0 na precisão que importa para o gradiente. Toda a
-variação informativa da coluna ficaria comprimida num intervalo de largura desprezível,
-enquanto o único passageiro de 29 813 ocuparia sozinho o outro extremo. A rede
-receberia uma feature que, na prática, só distingue "outlier" de "todo o resto".
+de $[-1, 1]$. O código simula exatamente esse cenário, e o resultado é o seguinte:
+
+| Sem `log1p`, escalonando `FoodCourt` bruto para $[-1, 1]$ | Valor medido no treino |
+|---|---:|
+| Passageiros mapeados abaixo de $-0.99$ | **78.26 %** |
+| Passageiros mapeados abaixo de $-0.90$ | **92.52 %** |
+| Onde cairia um gasto de 500 (acima da média de 452.61) | **$-0.9665$** |
+
+Ou seja: mais de três quartos do conjunto ficaria espremido no último centésimo da
+faixa, e um passageiro que gastou **acima da média** seria mapeado para $-0.9665$ —
+praticamente indistinguível de quem gastou 0 ($-1$) na precisão que importa para o
+gradiente. Toda a variação informativa da coluna ficaria comprimida num intervalo de
+largura desprezível, enquanto o único passageiro de 29 813 ocuparia sozinho o outro
+extremo. A rede receberia uma feature que, na prática, só distingue "outlier" de
+"todo o resto".
 
 Com o `log1p`, a mesma coluna passa a ocupar a faixa de 0 a $\approx 10.3$ **antes**
 do escalonamento, e as diferenças entre gastos pequenos, médios e grandes sobrevivem
