@@ -119,14 +119,17 @@ inteiramente reprodutível.
 
 | Quantidade | Valor |
 |---|---|
-| $\mathbf{w}$ final | $[0.007782,\ 0.015401]$ |
-| $b$ final | $-0.080000$ |
+| $\mathbf{w}$ inicial | $[0.017029,\ 0.006467]$ |
+| $\mathbf{w}$ final | $[0.004378,\ 0.004702]$ |
+| $b$ final | $-0.030000$ |
 | Épocas até convergir | **2** |
 | Acurácia final | **100.00 %** (2000 de 2000) |
-| Atualizações por época | época 1: **20**; época 2: **0** |
+| Atualizações por época | época 1: **5**; época 2: **0** |
 
 O treino parou por convergência, não por limite de épocas: a segunda passagem
-percorreu os 2000 pontos sem precisar de uma única correção.
+percorreu os 2000 pontos sem precisar de uma única correção. Bastaram **5**
+correções no total — as nuvens estão a sete desvios uma da outra, então quase
+nenhum ponto cai do lado errado da reta inicial.
 
 ![Fronteira aprendida sobre os dados separáveis](figures/figure_02_separable_boundary.png)
 /// caption
@@ -136,7 +139,7 @@ há nenhum ponto mal classificado para destacar — o contador na legenda marca 
 
 ![Acurácia por época](figures/figure_03_separable_accuracy.png)
 /// caption
-**Figura 3** — Acurácia por época. Já ao fim da primeira época, depois das 20
+**Figura 3** — Acurácia por época. Já ao fim da primeira época, depois das 5
 correções, a acurácia é 100 %; a segunda época apenas confirma que nada mais muda.
 ///
 
@@ -155,9 +158,9 @@ fronteira, e cada empurrão a move na direção que corrige aquele erro específ
 A consequência é que **o número de atualizações por época mede quanto trabalho
 resta**, e em dados separáveis ele desce a zero rapidamente. Foi o que aconteceu:
 
-| Época | Atualizações | Acurácia ao fim da época |
+| Época | Atualizações ($\eta = 0.01$) | Acurácia ao fim da época |
 |---:|---:|---:|
-| 1 | 20 | 100.00 % |
+| 1 | 5 | 100.00 % |
 | 2 | **0** | 100.00 % |
 
 Como existe um hiperplano que acerta todos os pontos, há um conjunto de pesos em
@@ -167,47 +170,55 @@ convergência do perceptron garante para dados linearmente separáveis.
 
 #### O que $\eta$ controla — a comparação $\eta = 0.01$ contra $\eta = 1.0$
 
-Mesmo treino, mesma inicialização, mesma ordem de embaralhamento; só $\eta$ muda.
+Mesmo treino, **mesma inicialização, mesma ordem de embaralhamento**; só $\eta$
+muda. Isso não é automático: se os dois treinos recebessem o gerador compartilhado
+em sequência, o segundo partiria de um `rng` já avançado pelo primeiro — outra
+inicialização e outra ordem de exemplos — e a diferença entre as fronteiras não
+poderia ser atribuída a $\eta$. Por isso cada treino recebe um gerador novo,
+construído a partir de uma mesma semente sorteada do `rng` compartilhado; o código
+confere a igualdade com `assert np.array_equal(run["w0"], run_fast["w0"])`.
 
 | | $\eta = 0.01$ | $\eta = 1.0$ |
 |---|---|---|
-| $\mathbf{w}$ final | $[0.007782,\ 0.015401]$ | $[5.357647,\ 5.551333]$ |
-| $b$ final | $-0.080000$ | $-36.000000$ |
-| Épocas | **2** | **5** |
+| $\mathbf{w}$ inicial (idêntico) | $[0.017029,\ 0.006467]$ | $[0.017029,\ 0.006467]$ |
+| $\mathbf{w}$ final | $[0.004378,\ 0.004702]$ | $[0.939008,\ 1.986582]$ |
+| $b$ final | $-0.030000$ | $-10.000000$ |
+| Épocas | **2** | **2** |
 | Acurácia final | **100.00 %** | **100.00 %** |
-| $\lVert\mathbf{w}\rVert$ | 0.017255 | 7.715029 |
-| Direção $\mathbf{w}/\lVert\mathbf{w}\rVert$ | $[0.450973,\ 0.892538]$ | $[0.694443,\ 0.719548]$ |
-| Atualizações por época | $[20,\ 0]$ | $[71,\ 3,\ 21,\ 11,\ 0]$ |
+| $\lVert\mathbf{w}\rVert$ | 0.006425 | 2.197327 |
+| Direção $\mathbf{w}/\lVert\mathbf{w}\rVert$ | $[0.681437,\ 0.731877]$ | $[0.427341,\ 0.904090]$ |
+| Atualizações por época | $[5,\ 0]$ | $[22,\ 0]$ |
 
-As duas corridas chegam a 100 %, mas **por fronteiras diferentes**: o ângulo entre
-as duas direções é de **17.1767°**.
+As duas corridas chegam a 100 % e param na mesma época, mas **por fronteiras
+diferentes**: o ângulo entre as duas direções é de **17.6571°**.
 
 O enunciado dá a chave: cada atualização soma $\eta\mathbf{x}$ a pesos que começaram
-com magnitude $\approx 0.01$. Portanto **$\eta$ controla o peso relativo entre a
-inicialização aleatória e as correções acumuladas**:
+com magnitude $\lVert\mathbf{w}_0\rVert = 0.018216$. Portanto **$\eta$ controla o
+peso relativo entre a inicialização aleatória e as correções acumuladas**. Nestes
+dados $\lVert\mathbf{x}\rVert$ vale **4.6543** em média, então:
 
-Nestes dados $\lVert\mathbf{x}\rVert$ vale **4.6543** em média, e a inicialização
-sorteada tem magnitude $\lVert\mathbf{w}_0\rVert =$ **0.010837**. Então:
-
-- Com $\eta = 0.01$, cada correção soma magnitude
-  $\eta\lVert\mathbf{x}\rVert \approx 0.0465$, e o $\lVert\mathbf{w}\rVert$ final é
-  **0.017255** — apenas **1.6 vez** a magnitude inicial. O vetor inicial aleatório
-  **ainda está lá**, e a direção final é um compromisso entre ele e as 20 correções.
-- Com $\eta = 1.0$, cada correção soma magnitude $\approx 4.6543$, e o
-  $\lVert\mathbf{w}\rVert$ final é **7.715029** — **711.9 vezes** a inicialização.
-  O vetor inicial foi **completamente apagado**; a direção final é essencialmente a
-  soma dos $\mathbf{x}$ que geraram erro.
+- Com $\eta = 0.01$, cada correção tem magnitude
+  $\eta\lVert\mathbf{x}\rVert \approx 0.0465$ — da mesma ordem de grandeza da
+  inicialização (**2.6 vezes** $\lVert\mathbf{w}_0\rVert$). O $\lVert\mathbf{w}\rVert$
+  final é **0.006425**, ou **0.35 vez** o inicial: as 5 correções não apenas giraram
+  o vetor, elas **encolheram** o que já estava lá. O vetor inicial aleatório ainda
+  pesa na direção final.
+- Com $\eta = 1.0$, cada correção tem magnitude $\approx 4.6543$ — **255 vezes**
+  $\lVert\mathbf{w}_0\rVert$. O $\lVert\mathbf{w}\rVert$ final é **2.197327**,
+  **120.6 vezes** a inicialização. O vetor inicial foi **apagado**; a direção final é
+  essencialmente a soma dos $\mathbf{x}$ que geraram erro.
 
 Logo $\eta$ **não** controla "se" o perceptron converge em dados separáveis — ambos
-convergem — mas **para qual** dos infinitos hiperplanos separadores ele converge.
+convergem, e aqui até na mesma época — mas **para qual** dos infinitos hiperplanos
+separadores ele converge.
 
-Um resultado que vale reportar com honestidade porque contraria a intuição comum:
-**$\eta = 1.0$ levou mais épocas (5) do que $\eta = 0.01$ (2)**, não menos. O
-histórico de atualizações explica: com passo grande, cada correção joga a fronteira
-longe e cria novos erros do outro lado — 71 atualizações na primeira época, depois
-3, depois 21 de novo, num vai-e-vem até assentar. Com passo pequeno, as 20
-correções sutis sobre um vetor inicial que já apontava para um lado razoável
-bastaram. Taxa maior não significa convergência mais rápida.
+Um detalhe que vale reportar porque contraria a intuição de que passo maior é
+sempre "mais eficiente": **$\eta = 1.0$ precisou de 22 correções contra 5**, mais
+que o quádruplo, para chegar ao mesmo lugar em acurácia. Com passo grande, cada
+correção joga a fronteira longe e cria novos erros do outro lado, que precisam ser
+corrigidos por sua vez; com passo pequeno, as 5 correções sutis sobre um vetor
+inicial que já apontava para um lado razoável bastaram. Taxa maior não significa
+menos trabalho.
 
 #### Por que partir de $\mathbf{w} = \mathbf{0}$, $b = 0$ tornaria $\eta$ irrelevante
 
@@ -261,7 +272,7 @@ $(\mathbf{w}, b)$ por $c > 0$ não altera esse conjunto — é a **mesma reta**.
 É exatamente por isso que o item B proíbe o início em zero. Com
 $\mathbf{w} \sim \mathcal{N}(0, 0.01^2)$ existe uma escala de referência fixa e
 não nula, que não é reescalada junto com $\eta$ — e aí $\eta$ passa a importar,
-como as duas direções separadas por 17.1767° mostram.
+como as duas direções separadas por 17.6571° mostram.
 
 ## Exercise 2
 
@@ -299,31 +310,35 @@ conjunto completo acima da melhor já vista, copia-se $(\mathbf{w}, b)$.
 
 | | $\mathbf{w}$ | $b$ | Acurácia | Erros (de 2000) |
 |---|---|---|---:|---:|
-| **Pesos finais** | $[0.121804,\ 0.101922]$ | $-0.500000$ | **58.30 %** | 834 |
-| **Pesos pocket** | $[0.088599,\ 0.066032]$ | $-0.520000$ | **72.30 %** | 554 |
+| **Pesos finais** | $[0.057028,\ 0.046427]$ | $-0.420000$ | **66.10 %** | 678 |
+| **Pesos pocket** | $[0.063451,\ 0.057988]$ | $-0.410000$ | **71.85 %** | 563 |
 
-O melhor pocket ocorreu na **época 61**. O treino percorreu as **100 épocas sem
+O melhor pocket ocorreu na **época 27**. O treino percorreu as **100 épocas sem
 convergir** — como esperado, já que nenhuma reta acerta todos os pontos, sempre
-resta erro e portanto sempre há atualização. Foram **73 112 atualizações** no
-total, entre 683 e 793 por época.
+resta erro e portanto sempre há atualização. Foram **75 608 atualizações** no
+total, entre 706 e 818 por época.
 
-Os dois números estão muito distantes, e os 58.30 % dos pesos finais parecem
-quebrados. **Esse é o resultado correto, não um defeito** — o item D explica.
+O pocket chegou a 71.85 %, perto dos ~73 % que o enunciado antecipa como teto
+prático para uma reta aqui. Os pesos finais ficaram quase **6 pontos abaixo**, em
+66.10 %, e o item D mostra que esse número é um sorteio: a curva da Figura 6 visita
+valores de 50.00 % a 71.40 % e o treino simplesmente para onde a centésima época o
+deixou. **Esse é o resultado correto, não um defeito.**
 
 ### C — Figures
 
 ![Fronteiras final e pocket](figures/figure_05_overlapping_boundaries.png)
 /// caption
-**Figura 5** — As duas fronteiras sobre os dados. A **final** (preta, contínua) está
-deslocada para o canto inferior esquerdo, deixando quase toda a nuvem de um lado
-só; a **pocket** (verde, tracejada) atravessa o meio da nuvem. Os círculos marcam
-os 834 pontos que a fronteira final erra.
+**Figura 5** — As duas fronteiras sobre os dados. A **pocket** (verde, tracejada)
+atravessa o meio da nuvem; a **final** (preta, contínua) está deslocada para cima e
+para a direita, deixando a maior parte dos pontos do lado da classe 0 — ela rotula
+só 29.20 % do conjunto como classe 1, quando 50 % o são. Os círculos marcam os 678
+pontos que a fronteira final erra.
 ///
 
 ![Acurácia atual versus pocket](figures/figure_06_overlapping_accuracy.png)
 /// caption
 **Figura 6** — Acurácia dos pesos atuais (vermelho) e melhor acurácia já vista
-(verde) por época. A curva vermelha oscila entre 50.00 % e 71.75 % durante as 100
+(verde) por época. A curva vermelha oscila entre 50.00 % e 71.40 % durante as 100
 épocas e nunca assenta; a verde é monótona por construção.
 ///
 
@@ -332,52 +347,53 @@ os 834 pontos que a fronteira final erra.
 #### A distância entre a acurácia final e a do pocket
 
 A melhor reta possível para estes dados acerta cerca de 73 %, e o pocket chegou a
-**72.30 %** — praticamente lá. Os pesos finais ficaram em **58.30 %**. A diferença
-de quase 14 pontos não vem de o perceptron "não ter aprendido": vem de **onde a
-regra de atualização deixa a fronteira**.
+**71.85 %** — praticamente lá. Os pesos finais ficaram em **66.10 %**. A diferença
+de 5.75 pontos não vem de o perceptron "não ter aprendido": vem de **onde a regra
+de atualização deixa a fronteira**.
 
-**Onde a fronteira final está.** O centróide dos dados é $[3.5206,\ 3.5521]$. A
+**Onde a fronteira final está.** O centróide dos dados é $[3.4733,\ 3.5264]$. A
 distância com sinal do centróide até cada fronteira, medida em unidades de
 $\lVert\mathbf{w}\rVert$, é:
 
 | | Distância com sinal do centróide | Pontos classificados como classe 1 |
 |---|---:|---:|
-| Fronteira final | $+1.8314$ | **90.00 %** |
-| Fronteira pocket | $+0.2396$ | **57.20 %** |
+| Fronteira final | $-0.7915$ | **29.20 %** |
+| Fronteira pocket | $+0.1730$ | **54.75 %** |
 
-A fronteira final está **1.83 unidades abaixo do centro da nuvem** — ela passa pela
-borda inferior esquerda, não pelo meio. O resultado é que ela rotula **90 % de
-todos os pontos como classe 1**, embora apenas 50 % o sejam. Acerta quase toda a
-classe 1 e erra quase toda a classe 0: daí os 58.30 %. A fronteira pocket, em
-contraste, passa a $0.24$ do centróide — praticamente pelo meio — e divide os
-rótulos de forma equilibrada (57.20 % positivos).
+A fronteira final passa **0.79 unidade do lado da classe 1 em relação ao centro da
+nuvem** — ela corta a nuvem acima do meio, como a Figura 5 mostra. O resultado é que
+rotula só **29.20 % dos pontos como classe 1**, embora 50 % o sejam: acerta quase
+toda a classe 0 e erra a maior parte da classe 1, e daí os 66.10 %. A fronteira
+pocket, em contraste, passa a $0.17$ do centróide — praticamente pelo meio — e
+divide os rótulos de forma equilibrada (54.75 % positivos).
 
 **Por que o laço a deixa ali.** A dica do enunciado é comparar quanto $b$ se move
 por erro contra quanto $\mathbf{w}$ se move. Por atualização:
 
 $$
 \Delta\lVert\mathbf{w}\rVert \le \eta\lVert\mathbf{x}\rVert
-= 0.01 \times 5.1601 = 0.0516,
+= 0.01 \times 5.1111 = 0.0511,
 \qquad
 |\Delta b| = \eta = 0.0100 .
 $$
 
-Com $\lVert\mathbf{x}\rVert \approx 5.16$ para estes dados, **$\mathbf{w}$ se move
-5.16 vezes mais depressa que $b$ a cada erro**. Mas quem posiciona a fronteira
+Com $\lVert\mathbf{x}\rVert \approx 5.11$ para estes dados, **$\mathbf{w}$ se move
+5.11 vezes mais depressa que $b$ a cada erro**. Mas quem posiciona a fronteira
 *ao longo* da direção $\mathbf{w}$ é justamente a razão $-b/\lVert\mathbf{w}\rVert$.
 Como $\mathbf{w}$ cresce rápido e $b$ se arrasta, o deslocamento não consegue
 acompanhar a rotação: a reta gira com agilidade mas não desliza até o centro da
 nuvem. Ela termina onde o último punhado de erros a jogou — e, como em dados
 sobrepostos há 700+ erros por época, "o último punhado" é essencialmente aleatório.
 A acurácia final é um sorteio entre os valores que a curva vermelha da Figura 6
-visita; nesta execução o sorteio caiu em 58.30 %.
+visita; nesta execução o sorteio caiu em 66.10 %. Em outra execução poderia cair em
+50 % ou em 71 % — é precisamente essa imprevisibilidade que o pocket elimina.
 
 #### Figura 3 contra Figura 6, e a hipótese que o teorema exige
 
 Na **Figura 3** a acurácia sobe a 100 % e fica: zero atualização, zero movimento,
-ponto fixo. Na **Figura 6** ela oscila entre 50.00 % e 71.75 % por 100 épocas, com
-média de 62.83 %, e termina em 58.30 % — mais baixa que a média, sem nenhuma
-tendência de assentar.
+ponto fixo. Na **Figura 6** ela oscila entre 50.00 % e 71.40 % por 100 épocas, com
+média de 61.56 %, e termina em 66.10 % — sem nenhuma tendência de assentar: o valor
+final é apenas o ponto onde a centésima época parou.
 
 O **teorema de convergência do perceptron** garante que, se os dados forem
 **linearmente separáveis**, o algoritmo encontra um hiperplano separador em um
@@ -401,12 +417,12 @@ erro.
 **Mais épocas, não.** A condição de parada é "uma passagem sem nenhuma
 atualização". Ela exige que *todos* os 2000 pontos estejam do lado certo —
 impossível aqui. Então, para qualquer número de épocas, a última época ainda
-conterá centenas de erros (foram entre 683 e 793 por época nas 100 que rodamos), e
+conterá centenas de erros (foram entre 706 e 818 por época nas 100 que rodamos), e
 cada um deles continuará movendo a fronteira. Rodar 10 000 épocas apenas gera mais
 amostras da mesma oscilação: o estado final continua sendo o resíduo arbitrário das
 últimas correções. É por isso que o pocket é necessário — ele é a única coisa que
 transforma uma trajetória que não converge em uma resposta utilizável, e ele **já
-havia encontrado 71.90 % na primeira época**, subindo só até 72.30 % na época 61.
+havia encontrado 71.65 % na primeira época**, subindo só até 71.85 % na época 27.
 
 **Um $\eta$ menor, também não.** $\eta$ multiplica igualmente os dois termos da
 atualização, $\eta(y-\hat{y})\mathbf{x}$ e $\eta(y-\hat{y})$. Diminuí-lo encolhe
@@ -426,11 +442,11 @@ dar ao modelo uma fronteira não linear.
 
 | # | Quantity | Value |
 |---:|---|---|
-| 1 | Exercise 1 — final \(\mathbf{w}\) and \(b\) | \(\mathbf{w} = [0.007782,\ 0.015401]\), \(b = -0.080000\) |
+| 1 | Exercise 1 — final \(\mathbf{w}\) and \(b\) | \(\mathbf{w} = [0.004378,\ 0.004702]\), \(b = -0.030000\) |
 | 2 | Exercise 1 — epochs to convergence | 2 épocas (parou por ausência de atualizações, não pelo teto de 100) |
 | 3 | Exercise 1 — final accuracy | 100.00 % (2000 de 2000) |
-| 4 | Exercise 1 — epochs and final accuracy with \(\eta = 1.0\) | 5 épocas, 100.00 % (direção de \(\mathbf{w}\) a 17.1767° da obtida com \(\eta = 0.01\)) |
-| 5 | Exercise 2 — final \(\mathbf{w}\) and \(b\) | \(\mathbf{w} = [0.121804,\ 0.101922]\), \(b = -0.500000\) |
-| 6 | Exercise 2 — accuracy of the final weights | 58.30 % (834 erros em 2000) |
-| 7 | Exercise 2 — accuracy of the pocket weights | 72.30 % (554 erros em 2000) |
-| 8 | Exercise 2 — epoch at which the pocket best occurred | época 61 (de 100; o treino não convergiu) |
+| 4 | Exercise 1 — epochs and final accuracy with \(\eta = 1.0\) | 2 épocas, 100.00 % (mesma inicialização; direção de \(\mathbf{w}\) a 17.6571° da obtida com \(\eta = 0.01\), e 22 correções contra 5) |
+| 5 | Exercise 2 — final \(\mathbf{w}\) and \(b\) | \(\mathbf{w} = [0.057028,\ 0.046427]\), \(b = -0.420000\) |
+| 6 | Exercise 2 — accuracy of the final weights | 66.10 % (678 erros em 2000) |
+| 7 | Exercise 2 — accuracy of the pocket weights | 71.85 % (563 erros em 2000) |
+| 8 | Exercise 2 — epoch at which the pocket best occurred | época 27 (de 100; o treino não convergiu) |

@@ -417,7 +417,7 @@ desta identidade.
 | Parâmetros treináveis | 259 |
 | Taxa de aprendizado | 0.5 |
 | Épocas | 4000 (*full batch*) |
-| Perda de treino final | 0.176446 |
+| Perda de treino final | 0.170527 (de 1.356525 na primeira época) |
 | Acurácia de treino | 93.75 % |
 | **Acurácia de teste** | **82.67 %** |
 

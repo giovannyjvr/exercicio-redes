@@ -188,13 +188,20 @@ def exercise_1(rng: np.random.Generator) -> dict[str, Any]:
         EXPECTED_FIGURES[0],
     )
 
-    # A magnitude da inicialização e o ||x|| médio sustentam, no item D, o
-    # argumento sobre o peso relativo entre o vetor inicial e as correções.
-    # Reproduz o sorteio de train() sem consumir o rng principal.
-    init_norm = float(np.linalg.norm(np.random.default_rng(SEED).normal(0.0, 0.01, size=2)))
     mean_norm = float(np.mean(np.linalg.norm(X, axis=1)))
 
-    run = train(X, y, rng, eta=0.01, max_epochs=100)
+    # Para que a comparação do item D isole a taxa de aprendizado, os dois
+    # treinos precisam partir da MESMA inicialização e ver os exemplos na MESMA
+    # ordem. Passar o rng compartilhado aos dois faria o segundo começar com o
+    # gerador já avançado pelo primeiro — inicialização e embaralhamento
+    # diferentes, e aí a diferença entre as fronteiras não seria atribuível a
+    # eta. A semente de treino é sorteada uma vez do rng compartilhado (logo
+    # continua descendendo de default_rng(42)) e cada treino recebe um gerador
+    # novo construído a partir dela.
+    train_seed = int(rng.integers(1 << 32))
+
+    run = train(X, y, np.random.default_rng(train_seed), eta=0.01, max_epochs=100)
+    init_norm = run["init_norm"]
     fig2 = figure_boundary(
         X, y,
         [{"w": run["w"], "b": run["b"], "accuracy": run["accuracy"], "label": "pesos finais", "color": "black"}],
@@ -213,8 +220,9 @@ def exercise_1(rng: np.random.Generator) -> dict[str, Any]:
         EXPECTED_FIGURES[2],
     )
 
-    # Mesmo treino, mudando só a taxa de aprendizado.
-    run_fast = train(X, y, rng, eta=1.0, max_epochs=100)
+    # Mesmo treino, mesma semente — muda só a taxa de aprendizado.
+    run_fast = train(X, y, np.random.default_rng(train_seed), eta=1.0, max_epochs=100)
+    assert np.array_equal(run["w0"], run_fast["w0"]), "os dois treinos partiram de inicializações diferentes"
 
     def direction(w: np.ndarray) -> np.ndarray:
         return w / np.linalg.norm(w)
@@ -234,7 +242,8 @@ def exercise_1(rng: np.random.Generator) -> dict[str, Any]:
     print(f"  ângulo entre as duas direções = {angle:.4f}°")
     print(f"  ||x|| médio = {mean_norm:.4f} -> passo em w por erro:"
           f" eta=0.01 soma ~{0.01 * mean_norm:.4f}, eta=1.0 soma ~{1.0 * mean_norm:.4f}")
-    print(f"  magnitude típica da inicialização ||w_0|| ~ {init_norm:.6f};"
+    print(f"  inicialização comum aos dois treinos: w_0 = [{run['w0'][0]:.6f}, {run['w0'][1]:.6f}]")
+    print(f"  magnitude da inicialização ||w_0|| = {init_norm:.6f};"
           f" razão ||w||/||w_0||: eta=0.01 -> {np.linalg.norm(run['w']) / init_norm:.1f}x,"
           f" eta=1.0 -> {np.linalg.norm(run_fast['w']) / init_norm:.1f}x")
     print(f"  atualizações por época (eta = 0.01): {[h['updates'] for h in run['history']]}")
@@ -265,8 +274,11 @@ def exercise_1(rng: np.random.Generator) -> dict[str, Any]:
             "updates_per_epoch": [h["updates"] for h in run_fast["history"]],
         },
         "direction_angle_degrees": angle,
+        "train_seed": train_seed,
         "mean_norm_x": mean_norm,
         "init_norm": init_norm,
+        "w0": run["w0"].tolist(),
+        "same_initialisation": bool(np.array_equal(run["w0"], run_fast["w0"])),
         "step_in_w_slow": 0.01 * mean_norm,
         "step_in_w_fast": 1.0 * mean_norm,
         "ratio_to_init_slow": float(np.linalg.norm(run["w"]) / init_norm),
@@ -287,8 +299,11 @@ def exercise_2(rng: np.random.Generator) -> dict[str, Any]:
         EXPECTED_FIGURES[3],
     )
 
-    # Mesma função do Exercise 1, sem nenhuma alteração.
-    run = train(X, y, rng, eta=0.01, max_epochs=100)
+    # Mesma função do Exercise 1, sem nenhuma alteração. Como lá, o treino recebe
+    # um gerador próprio, sorteado do rng compartilhado: assim o resultado deste
+    # exercício não depende de quantos sorteios o Exercise 1 consumiu.
+    train_seed = int(rng.integers(1 << 32))
+    run = train(X, y, np.random.default_rng(train_seed), eta=0.01, max_epochs=100)
 
     fig5 = figure_boundary(
         X, y,
@@ -320,6 +335,29 @@ def exercise_2(rng: np.random.Generator) -> dict[str, Any]:
     # tamanho relativo do passo em w e em b.
     mean_norm = float(np.mean(np.linalg.norm(X, axis=1)))
 
+    # Geometria das duas fronteiras, para o item D. A distância com sinal do
+    # centróide até a reta w·x + b = 0, medida em unidades de ||w||, diz de que
+    # lado e a que distância do meio da nuvem cada fronteira passou; a fração
+    # predita como classe 1 mostra o desequilíbrio que isso produz.
+    centroid = X.mean(axis=0)
+
+    def boundary_geometry(w: np.ndarray, b: float) -> dict[str, float]:
+        return {
+            "signed_distance_centroid": float((np.dot(w, centroid) + b) / np.linalg.norm(w)),
+            "share_predicted_class_1": float(np.mean(predict(X, w, b) == 1)),
+            "errors": int(np.sum(predict(X, w, b) != y)),
+        }
+
+    updates = [h["updates"] for h in run["history"]]
+    geometry = {
+        "centroid": centroid.tolist(),
+        "final": boundary_geometry(run["w"], run["b"]),
+        "pocket": boundary_geometry(run["pocket_w"], run["pocket_b"]),
+        "updates_total": int(sum(updates)),
+        "updates_min": int(min(updates)),
+        "updates_max": int(max(updates)),
+    }
+
     print("\nExercise 2 — dados sobrepostos")
     print(f"  finais -> w = [{run['w'][0]:.6f}, {run['w'][1]:.6f}], b = {run['b']:.6f},"
           f" acurácia = {run['accuracy'] * 100:.2f}%")
@@ -330,6 +368,15 @@ def exercise_2(rng: np.random.Generator) -> dict[str, Any]:
     accs = [h["accuracy"] for h in run["history"]]
     print(f"  acurácia por época: mín = {min(accs) * 100:.2f}%, máx = {max(accs) * 100:.2f}%,"
           f" média = {np.mean(accs) * 100:.2f}%")
+    print(f"  centróide dos dados = [{centroid[0]:.4f}, {centroid[1]:.4f}]")
+    for name in ("final", "pocket"):
+        g = geometry[name]
+        print(f"  fronteira {name:<6} -> distância com sinal do centróide ="
+              f" {g['signed_distance_centroid']:+.4f} |"
+              f" prediz classe 1 em {g['share_predicted_class_1'] * 100:.2f}% dos pontos |"
+              f" {g['errors']} erros")
+    print(f"  atualizações: total = {geometry['updates_total']},"
+          f" por época entre {geometry['updates_min']} e {geometry['updates_max']}")
 
     return {
         "n_per_class": N_PER_CLASS,
@@ -348,6 +395,9 @@ def exercise_2(rng: np.random.Generator) -> dict[str, Any]:
         "epochs": run["epochs"],
         "converged": run["converged"],
         "mean_norm_x": mean_norm,
+        "train_seed": train_seed,
+        "init_norm": run["init_norm"],
+        "geometry": geometry,
         "accuracy_per_epoch": accs,
         "pocket_per_epoch": [h["pocket_accuracy"] for h in run["history"]],
         "updates_per_epoch": [h["updates"] for h in run["history"]],
