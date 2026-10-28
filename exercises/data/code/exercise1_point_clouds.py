@@ -98,6 +98,31 @@ def mixing_rate(X: np.ndarray, y: np.ndarray) -> float:
     return float(np.mean(nearest_center_labels(X, CENTERS) != y))
 
 
+def mixing_by_pair(X: np.ndarray, y: np.ndarray) -> list[dict[str, Any]]:
+    """Distribui os erros da *mixing rate* pelos pares de classes envolvidos.
+
+    Responde "quais classes se confundem com quais", que é o que liga a tabela de
+    :math:`r_{ij}` aos erros efetivamente observados: espera-se que o par de menor
+    :math:`r_{ij}` concentre a maior parte dos erros.
+    """
+    predicted = nearest_center_labels(X, CENTERS)
+    wrong = predicted != y
+    counts: dict[tuple[int, int], int] = {}
+    for true_label, assigned in zip(y[wrong], predicted[wrong]):
+        pair = (int(min(true_label, assigned)), int(max(true_label, assigned)))
+        counts[pair] = counts.get(pair, 0) + 1
+    total = int(wrong.sum())
+    return [
+        {
+            "i": i,
+            "j": j,
+            "errors": n,
+            "share_of_errors": n / total if total else 0.0,
+        }
+        for (i, j), n in sorted(counts.items(), key=lambda item: -item[1])
+    ]
+
+
 def _scatter_classes(ax: plt.Axes, X: np.ndarray, y: np.ndarray) -> None:
     """Desenha as quatro classes e marca os centros teóricos."""
     for label in LABELS:
@@ -299,7 +324,16 @@ def run(rng: np.random.Generator) -> dict[str, Any]:
     for scale, rate in rates.items():
         print(f"  s = {scale:<4} -> {rate:.4f}  ({rate * 100:.2f}% dos 400 pontos)")
 
+    pairs_s1 = mixing_by_pair(X1, y1)
+    print("\nDe onde vêm os erros em s = 1.0 (par de classes confundidas)")
+    for row in pairs_s1:
+        print(
+            f"  classes {row['i']} e {row['j']}: {row['errors']} erros"
+            f" ({row['share_of_errors'] * 100:.1f}% do total)"
+        )
+
     return {
+        "mixing_by_pair_s1": pairs_s1,
         "n_total_per_dataset": 400,
         "n_per_class": N_PER_CLASS,
         "scales": SCALES,

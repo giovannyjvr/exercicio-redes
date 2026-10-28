@@ -87,11 +87,20 @@ def random_unit_directions(rng: np.random.Generator, n: int) -> np.ndarray:
     return v / norms[:, None]
 
 
-def sample_dataset_ii(rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]:
+def sample_dataset_ii(
+    rng: np.random.Generator,
+) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
     """Dataset II — cascas concêntricas C (raio ≈ 2) e D (raio ≈ 5), rótulos 0 e 1.
 
     Os raios **não** são convertidos para valor absoluto: isso truncaria a
     distribuição especificada no enunciado.
+
+    Devolve também um dicionário de diagnósticos medidos **nas amostras que de
+    fato compõem o dataset**. Ele existe porque duas afirmações do relatório não
+    são verificáveis olhando o resultado final: como :math:`\\lVert x \\rVert =
+    \\lvert \\rho \\rvert`, um raio negativo ficaria indistinguível de um positivo
+    depois da multiplicação, e o desvio das normas precisa ser medido nas direções
+    usadas, não numa amostra nova.
     """
     directions_c = random_unit_directions(rng, N_PER_CLASS)
     rho_c = rng.normal(RHO_C[0], RHO_C[1], size=N_PER_CLASS)
@@ -101,9 +110,18 @@ def sample_dataset_ii(rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]
     rho_d = rng.normal(RHO_D[0], RHO_D[1], size=N_PER_CLASS)
     class_d = rho_d[:, None] * directions_d
 
+    norms = np.linalg.norm(np.vstack([directions_c, directions_d]), axis=1)
+    diagnostics = {
+        "negative_rho_c": int((rho_c < 0).sum()),
+        "negative_rho_d": int((rho_d < 0).sum()),
+        "min_rho_c": float(rho_c.min()),
+        "min_rho_d": float(rho_d.min()),
+        "unit_norm_max_deviation": float(np.abs(norms - 1.0).max()),
+    }
+
     X = np.vstack([class_c, class_d])
     y = np.concatenate([np.zeros(N_PER_CLASS, dtype=int), np.ones(N_PER_CLASS, dtype=int)])
-    return X, y
+    return X, y, diagnostics
 
 
 def center_distance(X: np.ndarray, y: np.ndarray) -> dict[str, Any]:
@@ -218,18 +236,15 @@ def figure_05(datasets: dict[str, dict[str, Any]]) -> str:
 def run(rng: np.random.Generator) -> dict[str, Any]:
     """Executa o Exercise 2 inteiro e devolve todas as métricas citadas no relatório."""
     X1, y1 = sample_dataset_i(rng)
-    X2, y2 = sample_dataset_ii(rng)
+    X2, y2, shells = sample_dataset_ii(rng)
 
     for name, X, y in (("Dataset I", X1, y1), ("Dataset II", X2, y2)):
         assert X.shape == (2 * N_PER_CLASS, N_DIMS), f"{name}: forma inesperada {X.shape}"
         counts = np.bincount(y).tolist()
         assert counts == [N_PER_CLASS, N_PER_CLASS], f"{name}: contagem por classe {counts}"
 
-    # As direções do Dataset II devem estar sobre a esfera unitária: o raio de
-    # cada ponto tem de coincidir com |rho| usado para gerá-lo.
-    unit_check = random_unit_directions(rng, 1000)
-    unit_norms = np.linalg.norm(unit_check, axis=1)
-    assert np.allclose(unit_norms, 1.0), "as direções sorteadas não têm norma 1"
+    # As direções usadas no Dataset II têm de estar sobre a esfera unitária.
+    assert shells["unit_norm_max_deviation"] < 1e-12, "as direções sorteadas não têm norma 1"
 
     datasets = {
         "dataset_i": {
@@ -280,6 +295,12 @@ def run(rng: np.random.Generator) -> dict[str, Any]:
         f"\nLimiar radial ilustrativo para o Dataset II: ||x||^2 = {threshold ** 2:.4f}"
         f" (ou ||x|| = {threshold:.4f}) — erro geométrico = {threshold_error * 100:.2f}%"
     )
+    print(
+        f"\nDiagnósticos das cascas: raios negativos = {shells['negative_rho_c']} (C)"
+        f" e {shells['negative_rho_d']} (D); rho mínimo = {shells['min_rho_c']:.4f} (C)"
+        f" e {shells['min_rho_d']:.4f} (D); desvio máximo das normas das direções"
+        f" usadas = {shells['unit_norm_max_deviation']:.3e}"
+    )
 
     return {
         "n_per_class": N_PER_CLASS,
@@ -297,6 +318,6 @@ def run(rng: np.random.Generator) -> dict[str, Any]:
         "radial_threshold": threshold,
         "radial_threshold_squared": threshold**2,
         "radial_threshold_error": threshold_error,
-        "unit_norm_max_deviation": float(np.abs(unit_norms - 1.0).max()),
+        "shell_diagnostics": shells,
         "figures": [fig4, fig5],
     }

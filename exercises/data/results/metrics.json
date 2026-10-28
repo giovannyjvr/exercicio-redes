@@ -1,6 +1,26 @@
 {
   "seed": 42,
   "exercise_1": {
+    "mixing_by_pair_s1": [
+      {
+        "i": 0,
+        "j": 1,
+        "errors": 27,
+        "share_of_errors": 0.9310344827586207
+      },
+      {
+        "i": 0,
+        "j": 2,
+        "errors": 1,
+        "share_of_errors": 0.034482758620689655
+      },
+      {
+        "i": 1,
+        "j": 2,
+        "errors": 1,
+        "share_of_errors": 0.034482758620689655
+      }
+    ],
     "n_total_per_dataset": 400,
     "n_per_class": 100,
     "scales": [
@@ -130,7 +150,13 @@
     "radial_threshold": 3.5106995084775834,
     "radial_threshold_squared": 12.325011038824746,
     "radial_threshold_error": 0.001,
-    "unit_norm_max_deviation": 2.220446049250313e-16,
+    "shell_diagnostics": {
+      "negative_rho_c": 0,
+      "negative_rho_d": 0,
+      "min_rho_c": 0.7522100304527957,
+      "min_rho_d": 3.444878263352134,
+      "unit_norm_max_deviation": 3.3306690738754696e-16
+    },
     "figures": [
       "figure_04_pca.png",
       "figure_05_radius_histograms.png"
@@ -279,6 +305,12 @@
       "median": 0.0,
       "max": 29813.0,
       "missing": 154
+    },
+    "compression_without_log": {
+      "share_below_-0.99": 0.7825711820534944,
+      "share_below_-0.90": 0.9252228932988208,
+      "scaled_value_of_500": -0.9664575856170127,
+      "max_raw": 29813.0
     },
     "numeric_medians": {
       "Age": 27.0,
