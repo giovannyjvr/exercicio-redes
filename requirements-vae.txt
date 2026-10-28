@@ -1,0 +1,15 @@
+# Dependências exclusivas do exercício 4 (VAE).
+#
+# Ficam fora do requirements.txt porque o GitHub Actions apenas constrói o site:
+# baixar o PyTorch ali gastaria vários minutos sem necessidade. Para rodar o VAE
+# localmente:
+#
+#     python -m pip install -r requirements.txt
+#     python -m pip install -r requirements-vae.txt
+#
+# Em máquina sem GPU, as rodas de CPU bastam e são bem menores:
+#     python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+torch
+torchvision
+scipy

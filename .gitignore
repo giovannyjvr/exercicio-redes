@@ -6,3 +6,7 @@ target/
 # Python
 __pycache__/
 *.py[cod]
+separado/
+
+# MNIST baixado pelo torchvision no exercício do VAE
+docs/exercises/vae/data/
