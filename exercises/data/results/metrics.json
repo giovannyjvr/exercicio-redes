@@ -364,7 +364,26 @@
       "min_test": -1.0,
       "max_test": 1.1382785668023274,
       "all_numeric_train": true,
-      "all_numeric_test": true
+      "all_numeric_test": true,
+      "out_of_range_test": {
+        "columns": {
+          "ShoppingMall": {
+            "min": -1.0,
+            "max": 1.1382785668023274,
+            "cells_outside": 1
+          },
+          "VRDeck": {
+            "min": -1.0,
+            "max": 1.0345113599393878,
+            "cells_outside": 1
+          }
+        },
+        "n_columns_outside": 2,
+        "n_columns_inside": 15,
+        "cells_outside": 2,
+        "cells_total": 29563,
+        "share_outside": 6.765213273348442e-05
+      }
     },
     "figures": [
       "figure_06_foodcourt_before_after.png"

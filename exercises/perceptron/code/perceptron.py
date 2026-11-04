@@ -64,6 +64,10 @@ def train(
     n_features = X.shape[1]
     w = rng.normal(0.0, 0.01, size=n_features)
     b = 0.0
+    # Guarda a inicialização de fato sorteada. O item D compara ||w|| final com
+    # ||w_0||, e esse denominador precisa ser o vetor que este treino usou — não
+    # um sorteio equivalente feito à parte.
+    w0 = w.copy()
 
     pocket_w, pocket_b = w.copy(), b
     pocket_accuracy = accuracy(X, y, w, b)
@@ -116,6 +120,8 @@ def train(
     return {
         "w": w,
         "b": float(b),
+        "w0": w0,
+        "init_norm": float(np.linalg.norm(w0)),
         "accuracy": accuracy(X, y, w, b),
         "epochs": epochs_run,
         "converged": converged,

@@ -248,6 +248,27 @@ def final_checks(X_train: pd.DataFrame, X_test: pd.DataFrame) -> dict[str, Any]:
         "all_numeric_train": bool(all(np.issubdtype(t, np.number) for t in X_train.dtypes)),
         "all_numeric_test": bool(all(np.issubdtype(t, np.number) for t in X_test.dtypes)),
     }
+
+    # Quais colunas do teste escapam de [-1, 1] e por quanto. O scaler foi
+    # ajustado só no treino, então um valor de teste acima do máximo visto no
+    # treino sai da faixa — é esperado, e o relatório precisa dizer *quanto*.
+    outside = (test_values < -1.0) | (test_values > 1.0)
+    offenders = {}
+    for position, column in enumerate(X_test.columns):
+        if outside[:, position].any():
+            offenders[str(column)] = {
+                "min": float(test_values[:, position].min()),
+                "max": float(test_values[:, position].max()),
+                "cells_outside": int(outside[:, position].sum()),
+            }
+    checks["out_of_range_test"] = {
+        "columns": offenders,
+        "n_columns_outside": len(offenders),
+        "n_columns_inside": int(X_test.shape[1] - len(offenders)),
+        "cells_outside": int(outside.sum()),
+        "cells_total": int(test_values.size),
+        "share_outside": float(outside.sum() / test_values.size),
+    }
     assert checks["nan_train"] == 0 and checks["nan_test"] == 0, "sobrou NaN após o pré-processamento"
     assert checks["inf_train"] == 0 and checks["inf_test"] == 0, "há valores infinitos nas matrizes finais"
     assert checks["all_numeric_train"] and checks["all_numeric_test"], "há colunas não numéricas"
