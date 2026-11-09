@@ -1,0 +1,1233 @@
+{
+  "random_state": 42,
+  "generated_in_seconds": 143.0,
+  "etapa_0_1": {
+    "adequacy": {
+      "url": "https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data",
+      "file": "AB_NYC_2019.csv",
+      "n_rows": 48895,
+      "n_cols": 16,
+      "target": "price",
+      "target_in_file": true,
+      "n_numeric_columns": 10,
+      "n_categorical_columns": 6,
+      "numeric_columns": [
+        "id",
+        "host_id",
+        "latitude",
+        "longitude",
+        "price",
+        "minimum_nights",
+        "number_of_reviews",
+        "reviews_per_month",
+        "calculated_host_listings_count",
+        "availability_365"
+      ],
+      "categorical_columns": [
+        "name",
+        "host_name",
+        "neighbourhood_group",
+        "neighbourhood",
+        "room_type",
+        "last_review"
+      ],
+      "at_least_1000_rows": true
+    },
+    "missing": {
+      "table": [
+        {
+          "coluna": "last_review",
+          "ausentes": 10052,
+          "pct": 20.5583
+        },
+        {
+          "coluna": "reviews_per_month",
+          "ausentes": 10052,
+          "pct": 20.5583
+        },
+        {
+          "coluna": "host_name",
+          "ausentes": 21,
+          "pct": 0.0429
+        },
+        {
+          "coluna": "name",
+          "ausentes": 16,
+          "pct": 0.0327
+        },
+        {
+          "coluna": "neighbourhood_group",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "neighbourhood",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "id",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "host_id",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "longitude",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "latitude",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "room_type",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "price",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "number_of_reviews",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "minimum_nights",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "calculated_host_listings_count",
+          "ausentes": 0,
+          "pct": 0.0
+        },
+        {
+          "coluna": "availability_365",
+          "ausentes": 0,
+          "pct": 0.0
+        }
+      ],
+      "worst_column": "last_review",
+      "worst_count": 10052,
+      "worst_pct": 20.5583,
+      "n_columns_with_missing": 4
+    },
+    "structural_missingness": {
+      "reviews_per_month_missing": 10052,
+      "last_review_missing": 10052,
+      "number_of_reviews_zero": 10052,
+      "missing_iff_zero_reviews": true
+    },
+    "duplicates": {
+      "full_rows": 0,
+      "id": 0,
+      "business_key": 0,
+      "business_key_columns": [
+        "host_id",
+        "name",
+        "latitude",
+        "longitude",
+        "room_type"
+      ]
+    },
+    "impossible_values": {
+      "price <= 0": 11,
+      "price > 1000": 239,
+      "minimum_nights > 365": 14,
+      "availability_365 == 0": 17533,
+      "reviews_per_month > 31": 1,
+      "latitude fora de NYC": 0,
+      "longitude fora de NYC": 0
+    },
+    "identifiers": {
+      "id": {
+        "nunique": 48895,
+        "ratio": 1.0
+      },
+      "host_id": {
+        "nunique": 37457,
+        "ratio": 0.7660701503221188
+      },
+      "name": {
+        "nunique": 47905,
+        "ratio": 0.9797525309336333
+      },
+      "host_name": {
+        "nunique": 11452,
+        "ratio": 0.23421617752326412
+      }
+    },
+    "constant_columns": [],
+    "dropped_columns": {
+      "id": "identificador do anúncio — único por linha, sem conteúdo preditivo",
+      "host_id": "identificador do anfitrião — 37 457 valores; como feature vira memorização",
+      "name": "texto livre do anúncio — 47 905 valores distintos; exige NLP, fora do escopo tabular",
+      "host_name": "nome próprio do anfitrião — identificador pessoal, sem relação causal com preço"
+    },
+    "target": {
+      "count": 48895,
+      "mean": 152.7206871868289,
+      "median": 106.0,
+      "std": 240.15416974718758,
+      "min": 0.0,
+      "q25": 69.0,
+      "q75": 175.0,
+      "q99": 799.0,
+      "max": 10000.0,
+      "skew": 19.118938995046033,
+      "kurtosis": 585.6728788988288,
+      "zeros": 11,
+      "negatives": 0,
+      "log1p_skew": 0.6294448333542177,
+      "share_above_500": 0.021351876469986705,
+      "share_above_1000": 0.004888025360466305,
+      "squared_error_share": {
+        "above_500": 0.8607868356257843,
+        "above_1000": 0.7626092760043899,
+        "at_or_below_median": 0.0652621046665056,
+        "n_at_or_below_median": 24472,
+        "ratio_10000_vs_median": 44423.632670190724
+      }
+    },
+    "figures": [
+      "figure_01_target_price.png"
+    ]
+  },
+  "target_filter": {
+    "rows_before": 48895,
+    "rows_dropped": 11,
+    "share_dropped": 0.0002249718785151856,
+    "rows_after": 48884
+  },
+  "split": {
+    "test_size": 0.2,
+    "random_state": 42,
+    "n_train": 39107,
+    "n_test": 9777,
+    "n_features_in": 11,
+    "features_in": [
+      "neighbourhood_group",
+      "neighbourhood",
+      "latitude",
+      "longitude",
+      "room_type",
+      "minimum_nights",
+      "number_of_reviews",
+      "last_review",
+      "reviews_per_month",
+      "calculated_host_listings_count",
+      "availability_365"
+    ],
+    "target_in_features": false,
+    "train_price_mean": 153.17907280026594,
+    "test_price_mean": 151.05901605809552,
+    "train_price_median": 106.0,
+    "test_price_median": 107.0
+  },
+  "etapa_2": {
+    "numeric_describe": {
+      "minimum_nights": {
+        "count": 39107.0,
+        "mean": 7.110517,
+        "std": 21.010038,
+        "min": 1.0,
+        "25%": 1.0,
+        "50%": 3.0,
+        "75%": 5.0,
+        "max": 1250.0,
+        "skew": 21.458683,
+        "missing": 0
+      },
+      "number_of_reviews": {
+        "count": 39107.0,
+        "mean": 23.274503,
+        "std": 44.58819,
+        "min": 0.0,
+        "25%": 1.0,
+        "50%": 5.0,
+        "75%": 24.0,
+        "max": 629.0,
+        "skew": 3.735103,
+        "missing": 0
+      },
+      "reviews_per_month": {
+        "count": 31095.0,
+        "mean": 1.37774,
+        "std": 1.700943,
+        "min": 0.01,
+        "25%": 0.19,
+        "50%": 0.71,
+        "75%": 2.02,
+        "max": 58.5,
+        "skew": 3.379661,
+        "missing": 8012
+      },
+      "calculated_host_listings_count": {
+        "count": 39107.0,
+        "mean": 7.120337,
+        "std": 32.812685,
+        "min": 1.0,
+        "25%": 1.0,
+        "50%": 1.0,
+        "75%": 2.0,
+        "max": 327.0,
+        "skew": 7.961708,
+        "missing": 0
+      },
+      "latitude": {
+        "count": 39107.0,
+        "mean": 40.729019,
+        "std": 0.054537,
+        "min": 40.49979,
+        "25%": 40.690035,
+        "50%": 40.72312,
+        "75%": 40.763245,
+        "max": 40.91306,
+        "skew": 0.237662,
+        "missing": 0
+      },
+      "longitude": {
+        "count": 39107.0,
+        "mean": -73.952083,
+        "std": 0.046085,
+        "min": -74.24442,
+        "25%": -73.98303,
+        "50%": -73.95565,
+        "75%": -73.93619,
+        "max": -73.71299,
+        "skew": 1.301519,
+        "missing": 0
+      },
+      "availability_365": {
+        "count": 39107.0,
+        "mean": 113.213389,
+        "std": 131.846765,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 45.0,
+        "75%": 228.0,
+        "max": 365.0,
+        "skew": 0.756996,
+        "missing": 0
+      }
+    },
+    "categorical": {
+      "neighbourhood_group": {
+        "cardinality": 5,
+        "missing": 0,
+        "top": [
+          {
+            "categoria": "Manhattan",
+            "n": 17344,
+            "pct": 44.350116347456975
+          },
+          {
+            "categoria": "Brooklyn",
+            "n": 16059,
+            "pct": 41.06425959546884
+          },
+          {
+            "categoria": "Queens",
+            "n": 4546,
+            "pct": 11.624517349835067
+          },
+          {
+            "categoria": "Bronx",
+            "n": 866,
+            "pct": 2.2144373130130157
+          },
+          {
+            "categoria": "Staten Island",
+            "n": 292,
+            "pct": 0.7466693942260977
+          }
+        ],
+        "rare_below_50": 0,
+        "rows_in_rare_below_50": 0,
+        "share_rows_in_rare": 0.0
+      },
+      "room_type": {
+        "cardinality": 3,
+        "missing": 0,
+        "top": [
+          {
+            "categoria": "Entire home/apt",
+            "n": 20368,
+            "pct": 52.082747334236835
+          },
+          {
+            "categoria": "Private room",
+            "n": 17807,
+            "pct": 45.53404761295931
+          },
+          {
+            "categoria": "Shared room",
+            "n": 932,
+            "pct": 2.3832050528038455
+          }
+        ],
+        "rare_below_50": 0,
+        "rows_in_rare_below_50": 0,
+        "share_rows_in_rare": 0.0
+      },
+      "neighbourhood": {
+        "cardinality": 218,
+        "missing": 0,
+        "top": [
+          {
+            "categoria": "Williamsburg",
+            "n": 3133,
+            "pct": 8.011353466131384
+          },
+          {
+            "categoria": "Bedford-Stuyvesant",
+            "n": 2954,
+            "pct": 7.553634899122919
+          },
+          {
+            "categoria": "Harlem",
+            "n": 2137,
+            "pct": 5.464494847469763
+          },
+          {
+            "categoria": "Bushwick",
+            "n": 1956,
+            "pct": 5.001662106528243
+          },
+          {
+            "categoria": "Hell's Kitchen",
+            "n": 1574,
+            "pct": 4.0248548853146495
+          },
+          {
+            "categoria": "Upper West Side",
+            "n": 1571,
+            "pct": 4.0171836244150665
+          },
+          {
+            "categoria": "East Village",
+            "n": 1459,
+            "pct": 3.7307898841639604
+          },
+          {
+            "categoria": "Upper East Side",
+            "n": 1455,
+            "pct": 3.7205615362978492
+          },
+          {
+            "categoria": "Crown Heights",
+            "n": 1262,
+            "pct": 3.2270437517579973
+          },
+          {
+            "categoria": "Midtown",
+            "n": 1252,
+            "pct": 3.20147288209272
+          }
+        ],
+        "rare_below_50": 130,
+        "rows_in_rare_below_50": 1867,
+        "share_rows_in_rare": 0.04774081366507275,
+        "n_for_90pct_coverage": 59
+      }
+    },
+    "figures": [
+      "figure_02_numeric_heavy.png",
+      "figure_03_numeric_plain.png",
+      "figure_04_categorical_low.png",
+      "figure_05_neighbourhood_cardinality.png"
+    ]
+  },
+  "etapa_3": {
+    "correlation_method": "spearman",
+    "spearman": {
+      "minimum_nights": {
+        "minimum_nights": 1.0,
+        "number_of_reviews": -0.177754,
+        "reviews_per_month": -0.291575,
+        "calculated_host_listings_count": 0.063028,
+        "latitude": 0.024974,
+        "longitude": -0.11735,
+        "availability_365": 0.073439,
+        "price": 0.10044
+      },
+      "number_of_reviews": {
+        "minimum_nights": -0.177754,
+        "number_of_reviews": 1.0,
+        "reviews_per_month": 0.704844,
+        "calculated_host_listings_count": 0.054712,
+        "latitude": -0.047456,
+        "longitude": 0.080193,
+        "availability_365": 0.237934,
+        "price": -0.051408
+      },
+      "reviews_per_month": {
+        "minimum_nights": -0.291575,
+        "number_of_reviews": 0.704844,
+        "reviews_per_month": 1.0,
+        "calculated_host_listings_count": 0.148105,
+        "latitude": -0.024848,
+        "longitude": 0.119376,
+        "availability_365": 0.389418,
+        "price": -0.019049
+      },
+      "calculated_host_listings_count": {
+        "minimum_nights": 0.063028,
+        "number_of_reviews": 0.054712,
+        "reviews_per_month": 0.148105,
+        "calculated_host_listings_count": 1.0,
+        "latitude": 0.002223,
+        "longitude": 0.067517,
+        "availability_365": 0.406191,
+        "price": -0.107962
+      },
+      "latitude": {
+        "minimum_nights": 0.024974,
+        "number_of_reviews": -0.047456,
+        "reviews_per_month": -0.024848,
+        "calculated_host_listings_count": 0.002223,
+        "latitude": 1.0,
+        "longitude": 0.03558,
+        "availability_365": -0.006515,
+        "price": 0.136657
+      },
+      "longitude": {
+        "minimum_nights": -0.11735,
+        "number_of_reviews": 0.080193,
+        "reviews_per_month": 0.119376,
+        "calculated_host_listings_count": 0.067517,
+        "latitude": 0.03558,
+        "longitude": 1.0,
+        "availability_365": 0.067767,
+        "price": -0.440814
+      },
+      "availability_365": {
+        "minimum_nights": 0.073439,
+        "number_of_reviews": 0.237934,
+        "reviews_per_month": 0.389418,
+        "calculated_host_listings_count": 0.406191,
+        "latitude": -0.006515,
+        "longitude": 0.067767,
+        "availability_365": 1.0,
+        "price": 0.084372
+      },
+      "price": {
+        "minimum_nights": 0.10044,
+        "number_of_reviews": -0.051408,
+        "reviews_per_month": -0.019049,
+        "calculated_host_listings_count": -0.107962,
+        "latitude": 0.136657,
+        "longitude": -0.440814,
+        "availability_365": 0.084372,
+        "price": 1.0
+      }
+    },
+    "pearson": {
+      "minimum_nights": {
+        "minimum_nights": 1.0,
+        "number_of_reviews": -0.078412,
+        "reviews_per_month": -0.116463,
+        "calculated_host_listings_count": 0.124724,
+        "latitude": 0.025997,
+        "longitude": -0.061942,
+        "availability_365": 0.141113,
+        "price": 0.038387
+      },
+      "number_of_reviews": {
+        "minimum_nights": -0.078412,
+        "number_of_reviews": 1.0,
+        "reviews_per_month": 0.545491,
+        "calculated_host_listings_count": -0.072326,
+        "latitude": -0.01568,
+        "longitude": 0.060255,
+        "availability_365": 0.171942,
+        "price": -0.046507
+      },
+      "reviews_per_month": {
+        "minimum_nights": -0.116463,
+        "number_of_reviews": 0.545491,
+        "reviews_per_month": 1.0,
+        "calculated_host_listings_count": -0.010916,
+        "latitude": -0.012384,
+        "longitude": 0.146752,
+        "availability_365": 0.183073,
+        "price": -0.031774
+      },
+      "calculated_host_listings_count": {
+        "minimum_nights": 0.124724,
+        "number_of_reviews": -0.072326,
+        "reviews_per_month": -0.010916,
+        "calculated_host_listings_count": 1.0,
+        "latitude": 0.018948,
+        "longitude": -0.114166,
+        "availability_365": 0.22569,
+        "price": 0.054995
+      },
+      "latitude": {
+        "minimum_nights": 0.025997,
+        "number_of_reviews": -0.01568,
+        "reviews_per_month": -0.012384,
+        "calculated_host_listings_count": 0.018948,
+        "latitude": 1.0,
+        "longitude": 0.082649,
+        "availability_365": -0.009954,
+        "price": 0.034688
+      },
+      "longitude": {
+        "minimum_nights": -0.061942,
+        "number_of_reviews": 0.060255,
+        "reviews_per_month": 0.146752,
+        "calculated_host_listings_count": -0.114166,
+        "latitude": 0.082649,
+        "longitude": 1.0,
+        "availability_365": 0.081692,
+        "price": -0.14889
+      },
+      "availability_365": {
+        "minimum_nights": 0.141113,
+        "number_of_reviews": 0.171942,
+        "reviews_per_month": 0.183073,
+        "calculated_host_listings_count": 0.22569,
+        "latitude": -0.009954,
+        "longitude": 0.081692,
+        "availability_365": 1.0,
+        "price": 0.078224
+      },
+      "price": {
+        "minimum_nights": 0.038387,
+        "number_of_reviews": -0.046507,
+        "reviews_per_month": -0.031774,
+        "calculated_host_listings_count": 0.054995,
+        "latitude": 0.034688,
+        "longitude": -0.14889,
+        "availability_365": 0.078224,
+        "price": 1.0
+      }
+    },
+    "best_feature_pair": {
+      "a": "number_of_reviews",
+      "b": "reviews_per_month",
+      "spearman": 0.7048440892389541
+    },
+    "redundant_pairs": [
+      {
+        "a": "number_of_reviews",
+        "b": "reviews_per_month",
+        "spearman": 0.7048440892389541
+      }
+    ],
+    "target_correlation": {
+      "longitude": -0.4408136006618814,
+      "latitude": 0.13665719508370586,
+      "calculated_host_listings_count": -0.10796212066244437,
+      "minimum_nights": 0.10044040840618752,
+      "availability_365": 0.08437249793997816,
+      "number_of_reviews": -0.05140817940098533,
+      "reviews_per_month": -0.019049429209470243
+    },
+    "price_by_category": {
+      "neighbourhood_group": {
+        "Manhattan": {
+          "n": 17344,
+          "mediana": 150.0,
+          "media": 198.51,
+          "q25": 95.0,
+          "q75": 220.0,
+          "iqr": 125.0
+        },
+        "Brooklyn": {
+          "n": 16059,
+          "mediana": 90.0,
+          "media": 123.809,
+          "q25": 60.0,
+          "q75": 150.0,
+          "iqr": 90.0
+        },
+        "Queens": {
+          "n": 4546,
+          "mediana": 75.0,
+          "media": 98.52,
+          "q25": 50.0,
+          "q75": 110.0,
+          "iqr": 60.0
+        },
+        "Staten Island": {
+          "n": 292,
+          "mediana": 75.0,
+          "media": 115.3253,
+          "q25": 50.0,
+          "q75": 115.0,
+          "iqr": 65.0
+        },
+        "Bronx": {
+          "n": 866,
+          "mediana": 65.0,
+          "media": 89.6305,
+          "q25": 45.25,
+          "q75": 100.0,
+          "iqr": 54.75
+        }
+      },
+      "room_type": {
+        "Entire home/apt": {
+          "n": 20368,
+          "mediana": 160.0,
+          "media": 212.6125,
+          "q25": 120.0,
+          "q75": 228.0,
+          "iqr": 108.0
+        },
+        "Private room": {
+          "n": 17807,
+          "mediana": 70.0,
+          "media": 89.6195,
+          "q25": 50.0,
+          "q75": 95.0,
+          "iqr": 45.0
+        },
+        "Shared room": {
+          "n": 932,
+          "mediana": 45.0,
+          "media": 68.6996,
+          "q25": 34.0,
+          "q75": 75.0,
+          "iqr": 41.0
+        }
+      }
+    },
+    "neighbourhood_price": {
+      "n_neighbourhoods_with_50plus": 88,
+      "most_expensive": [
+        {
+          "bairro": "Tribeca",
+          "n": 146,
+          "mediana": 299.5
+        },
+        {
+          "bairro": "NoHo",
+          "n": 65,
+          "mediana": 250.0
+        },
+        {
+          "bairro": "Flatiron District",
+          "n": 68,
+          "mediana": 230.5
+        },
+        {
+          "bairro": "Midtown",
+          "n": 1252,
+          "mediana": 211.0
+        },
+        {
+          "bairro": "West Village",
+          "n": 609,
+          "mediana": 200.0
+        }
+      ],
+      "cheapest": [
+        {
+          "bairro": "Elmhurst",
+          "n": 197,
+          "mediana": 59.0
+        },
+        {
+          "bairro": "Borough Park",
+          "n": 110,
+          "mediana": 55.0
+        },
+        {
+          "bairro": "East Elmhurst",
+          "n": 145,
+          "mediana": 55.0
+        },
+        {
+          "bairro": "Woodhaven",
+          "n": 77,
+          "mediana": 53.0
+        },
+        {
+          "bairro": "Corona",
+          "n": 53,
+          "mediana": 40.0
+        }
+      ]
+    },
+    "numeric_by_category": {
+      "availability_365__room_type": {
+        "Entire home/apt": {
+          "median": 42.0,
+          "mean": 112.0583,
+          "std": 130.0907,
+          "count": 20368
+        },
+        "Private room": {
+          "median": 46.0,
+          "mean": 111.9309,
+          "std": 132.2587,
+          "count": 17807
+        },
+        "Shared room": {
+          "median": 90.0,
+          "mean": 162.9592,
+          "std": 151.2112,
+          "count": 932
+        }
+      },
+      "minimum_nights__room_type": {
+        "Entire home/apt": {
+          "median": 3.0,
+          "mean": 8.5758,
+          "std": 23.8683,
+          "count": 20368
+        },
+        "Private room": {
+          "median": 2.0,
+          "mean": 5.5247,
+          "std": 17.5041,
+          "count": 17807
+        },
+        "Shared room": {
+          "median": 1.0,
+          "mean": 5.3863,
+          "std": 10.9818,
+          "count": 932
+        }
+      },
+      "number_of_reviews__neighbourhood_group": {
+        "Bronx": {
+          "median": 9.0,
+          "mean": 26.149,
+          "std": 42.324,
+          "count": 866
+        },
+        "Brooklyn": {
+          "median": 6.0,
+          "mean": 24.1582,
+          "std": 44.3451,
+          "count": 16059
+        },
+        "Manhattan": {
+          "median": 4.0,
+          "mean": 20.8817,
+          "std": 42.2645,
+          "count": 17344
+        },
+        "Queens": {
+          "median": 7.5,
+          "mean": 28.1634,
+          "std": 52.9488,
+          "count": 4546
+        },
+        "Staten Island": {
+          "median": 13.0,
+          "mean": 32.161,
+          "std": 47.1538,
+          "count": 292
+        }
+      }
+    },
+    "figures": [
+      "figure_06_correlation.png",
+      "figure_07_scatter.png",
+      "figure_08_price_by_category.png",
+      "figure_09_price_by_neighbourhood.png",
+      "figure_10_numeric_by_category.png"
+    ]
+  },
+  "etapa_4": {
+    "pipeline_checks": {
+      "shape_train": [
+        39107,
+        106
+      ],
+      "shape_test": [
+        9777,
+        106
+      ],
+      "n_features_out": 106,
+      "feature_names": [
+        "heavy__minimum_nights",
+        "heavy__number_of_reviews",
+        "heavy__reviews_per_month",
+        "heavy__calculated_host_listings_count",
+        "plain__latitude",
+        "plain__longitude",
+        "plain__availability_365",
+        "plain__days_since_last_review",
+        "flag__never_reviewed",
+        "cat__neighbourhood_group_Bronx",
+        "cat__neighbourhood_group_Brooklyn",
+        "cat__neighbourhood_group_Manhattan",
+        "cat__neighbourhood_group_Queens",
+        "cat__neighbourhood_group_Staten Island",
+        "cat__room_type_Entire home/apt",
+        "cat__room_type_Private room",
+        "cat__room_type_Shared room",
+        "hicard__neighbourhood_Arverne",
+        "hicard__neighbourhood_Astoria",
+        "hicard__neighbourhood_Battery Park City",
+        "hicard__neighbourhood_Bay Ridge",
+        "hicard__neighbourhood_Bedford-Stuyvesant",
+        "hicard__neighbourhood_Bensonhurst",
+        "hicard__neighbourhood_Boerum Hill",
+        "hicard__neighbourhood_Borough Park",
+        "hicard__neighbourhood_Brighton Beach",
+        "hicard__neighbourhood_Brooklyn Heights",
+        "hicard__neighbourhood_Brownsville",
+        "hicard__neighbourhood_Bushwick",
+        "hicard__neighbourhood_Canarsie",
+        "hicard__neighbourhood_Carroll Gardens",
+        "hicard__neighbourhood_Chelsea",
+        "hicard__neighbourhood_Chinatown",
+        "hicard__neighbourhood_Clinton Hill",
+        "hicard__neighbourhood_Cobble Hill",
+        "hicard__neighbourhood_Corona",
+        "hicard__neighbourhood_Crown Heights",
+        "hicard__neighbourhood_Cypress Hills",
+        "hicard__neighbourhood_Ditmars Steinway",
+        "hicard__neighbourhood_Downtown Brooklyn",
+        "hicard__neighbourhood_East Elmhurst",
+        "hicard__neighbourhood_East Flatbush",
+        "hicard__neighbourhood_East Harlem",
+        "hicard__neighbourhood_East New York",
+        "hicard__neighbourhood_East Village",
+        "hicard__neighbourhood_Elmhurst",
+        "hicard__neighbourhood_Financial District",
+        "hicard__neighbourhood_Flatbush",
+        "hicard__neighbourhood_Flatiron District",
+        "hicard__neighbourhood_Flatlands",
+        "hicard__neighbourhood_Flushing",
+        "hicard__neighbourhood_Fordham",
+        "hicard__neighbourhood_Forest Hills",
+        "hicard__neighbourhood_Fort Greene",
+        "hicard__neighbourhood_Gowanus",
+        "hicard__neighbourhood_Gramercy",
+        "hicard__neighbourhood_Gravesend",
+        "hicard__neighbourhood_Greenpoint",
+        "hicard__neighbourhood_Greenwich Village",
+        "hicard__neighbourhood_Harlem",
+        "hicard__neighbourhood_Hell's Kitchen",
+        "hicard__neighbourhood_Inwood",
+        "hicard__neighbourhood_Jackson Heights",
+        "hicard__neighbourhood_Jamaica",
+        "hicard__neighbourhood_Kensington",
+        "hicard__neighbourhood_Kingsbridge",
+        "hicard__neighbourhood_Kips Bay",
+        "hicard__neighbourhood_Little Italy",
+        "hicard__neighbourhood_Long Island City",
+        "hicard__neighbourhood_Longwood",
+        "hicard__neighbourhood_Lower East Side",
+        "hicard__neighbourhood_Maspeth",
+        "hicard__neighbourhood_Midtown",
+        "hicard__neighbourhood_Midwood",
+        "hicard__neighbourhood_Morningside Heights",
+        "hicard__neighbourhood_Murray Hill",
+        "hicard__neighbourhood_NoHo",
+        "hicard__neighbourhood_Nolita",
+        "hicard__neighbourhood_Park Slope",
+        "hicard__neighbourhood_Prospect Heights",
+        "hicard__neighbourhood_Prospect-Lefferts Gardens",
+        "hicard__neighbourhood_Red Hook",
+        "hicard__neighbourhood_Rego Park",
+        "hicard__neighbourhood_Richmond Hill",
+        "hicard__neighbourhood_Ridgewood",
+        "hicard__neighbourhood_Rockaway Beach",
+        "hicard__neighbourhood_Roosevelt Island",
+        "hicard__neighbourhood_Sheepshead Bay",
+        "hicard__neighbourhood_SoHo",
+        "hicard__neighbourhood_South Slope",
+        "hicard__neighbourhood_Springfield Gardens",
+        "hicard__neighbourhood_St. Albans",
+        "hicard__neighbourhood_Sunnyside",
+        "hicard__neighbourhood_Sunset Park",
+        "hicard__neighbourhood_Theater District",
+        "hicard__neighbourhood_Tribeca",
+        "hicard__neighbourhood_Two Bridges",
+        "hicard__neighbourhood_Upper East Side",
+        "hicard__neighbourhood_Upper West Side",
+        "hicard__neighbourhood_Washington Heights",
+        "hicard__neighbourhood_West Village",
+        "hicard__neighbourhood_Williamsburg",
+        "hicard__neighbourhood_Windsor Terrace",
+        "hicard__neighbourhood_Woodhaven",
+        "hicard__neighbourhood_Woodside",
+        "hicard__neighbourhood_infrequent_sklearn"
+      ],
+      "nan_train": 0,
+      "nan_test": 0,
+      "max_abs_mean_train_scaled": 6.989487377794708e-14,
+      "max_abs_mean_test_scaled": 0.02325326198258631,
+      "columns_match": true
+    },
+    "outliers": {
+      "bounds": {
+        "minimum_nights": {
+          "lower": 1.0,
+          "upper": 45.0
+        },
+        "number_of_reviews": {
+          "lower": 0.0,
+          "upper": 213.0
+        },
+        "reviews_per_month": {
+          "lower": 0.0,
+          "upper": 6.9194000000000235
+        },
+        "calculated_host_listings_count": {
+          "lower": 1.0,
+          "upper": 232.0
+        }
+      },
+      "train": {
+        "rows_touched": 1370,
+        "share_rows_touched": 0.03503209144142992,
+        "per_column": {
+          "minimum_nights": {
+            "below": 0,
+            "above": 386
+          },
+          "number_of_reviews": {
+            "below": 0,
+            "above": 390
+          },
+          "reviews_per_month": {
+            "below": 0,
+            "above": 392
+          },
+          "calculated_host_listings_count": {
+            "below": 0,
+            "above": 259
+          }
+        }
+      },
+      "test": {
+        "rows_touched": 320,
+        "share_rows_touched": 0.03272987624015547,
+        "per_column": {
+          "minimum_nights": {
+            "below": 0,
+            "above": 83
+          },
+          "number_of_reviews": {
+            "below": 0,
+            "above": 103
+          },
+          "reviews_per_month": {
+            "below": 0,
+            "above": 77
+          },
+          "calculated_host_listings_count": {
+            "below": 0,
+            "above": 68
+          }
+        }
+      }
+    },
+    "unseen_categories_in_test": {
+      "neighbourhood_group": [],
+      "room_type": [],
+      "neighbourhood": [
+        "Bay Terrace, Staten Island",
+        "Rossville",
+        "Woodrow"
+      ]
+    },
+    "variance_by_block": {
+      "total": 10.271186650491986,
+      "blocks": {
+        "heavy": {
+          "n_columns": 4,
+          "variance": 3.9999999999997806,
+          "share_of_total": 0.38943893593912854
+        },
+        "plain": {
+          "n_columns": 4,
+          "variance": 3.9999999999998073,
+          "share_of_total": 0.38943893593913115
+        },
+        "flag": {
+          "n_columns": 1,
+          "variance": 0.16290053065275406,
+          "share_of_total": 0.01585995233033285
+        },
+        "cat": {
+          "n_columns": 8,
+          "variance": 1.1414561384205275,
+          "share_of_total": 0.1111318659919253
+        },
+        "hicard": {
+          "n_columns": 89,
+          "variance": 0.9668299814191182,
+          "share_of_total": 0.09413030979948236
+        }
+      }
+    },
+    "pca": {
+      "n_components_total": 106,
+      "pc1": 0.21463722133201105,
+      "pc2": 0.1686368084145855,
+      "pc1_plus_pc2": 0.3832740297465965,
+      "n_components_for_80pct": 7,
+      "n_components_for_95pct": 22,
+      "cumulative_first_10": [
+        0.21463722133201105,
+        0.3832740297465965,
+        0.5053726970899092,
+        0.6145469973886517,
+        0.6969923730263542,
+        0.7614965839286826,
+        0.8144180418753998,
+        0.8558126591977389,
+        0.8752579255361326,
+        0.8926055560790583
+      ],
+      "loadings": {
+        "PC1": [
+          {
+            "feature": "heavy__reviews_per_month",
+            "loading": 0.6152128897750586
+          },
+          {
+            "feature": "heavy__number_of_reviews",
+            "loading": 0.566144247697217
+          },
+          {
+            "feature": "plain__days_since_last_review",
+            "loading": -0.3135821898437399
+          },
+          {
+            "feature": "heavy__minimum_nights",
+            "loading": -0.29242631045754963
+          },
+          {
+            "feature": "plain__availability_365",
+            "loading": 0.2020498975430277
+          },
+          {
+            "feature": "plain__longitude",
+            "loading": 0.20050535042038534
+          },
+          {
+            "feature": "flag__never_reviewed",
+            "loading": -0.13122429965061935
+          },
+          {
+            "feature": "cat__neighbourhood_group_Manhattan",
+            "loading": -0.07325721633972387
+          }
+        ],
+        "PC2": [
+          {
+            "feature": "heavy__calculated_host_listings_count",
+            "loading": 0.6027432749803148
+          },
+          {
+            "feature": "plain__availability_365",
+            "loading": 0.547424870124498
+          },
+          {
+            "feature": "heavy__minimum_nights",
+            "loading": 0.4561290115011679
+          },
+          {
+            "feature": "plain__days_since_last_review",
+            "loading": -0.30335434403517886
+          },
+          {
+            "feature": "plain__latitude",
+            "loading": 0.10960966430057437
+          },
+          {
+            "feature": "cat__neighbourhood_group_Brooklyn",
+            "loading": -0.08666683349750164
+          },
+          {
+            "feature": "cat__neighbourhood_group_Manhattan",
+            "loading": 0.07856533821281309
+          },
+          {
+            "feature": "flag__never_reviewed",
+            "loading": 0.05283936717661597
+          }
+        ]
+      }
+    },
+    "embedding_sample": {
+      "n": 5000,
+      "method": "np.random.default_rng(42).choice sem reposição, do treino",
+      "random_price_gap_k15_baseline": 0.7508114148775579
+    },
+    "embedding_quality": {
+      "PCA": {
+        "trustworthiness_k5": 0.8169585176282051,
+        "trustworthiness_k30": 0.8182708796716789,
+        "local_price_gap_k15": 0.707807127046244,
+        "seconds": 0.0
+      },
+      "t-SNE perp=5": {
+        "trustworthiness_k5": 0.9959028525641026,
+        "trustworthiness_k30": 0.9568339516264676,
+        "local_price_gap_k15": 0.510716615338219,
+        "seconds": 12.598769200005336
+      },
+      "t-SNE perp=30": {
+        "trustworthiness_k5": 0.9973485176282051,
+        "trustworthiness_k30": 0.9830554822215495,
+        "local_price_gap_k15": 0.502948268336823,
+        "seconds": 12.833795800019288
+      },
+      "t-SNE perp=50": {
+        "trustworthiness_k5": 0.9967320592948717,
+        "trustworthiness_k30": 0.985216105224207,
+        "local_price_gap_k15": 0.5044884511007689,
+        "seconds": 15.491500000003725
+      },
+      "UMAP nn=5": {
+        "trustworthiness_k5": 0.9896308413461539,
+        "trustworthiness_k30": 0.9549010488781242,
+        "local_price_gap_k15": 0.5166217661922682,
+        "seconds": 40.50887779999175
+      },
+      "UMAP nn=15": {
+        "trustworthiness_k5": 0.9871467788461539,
+        "trustworthiness_k30": 0.9756401385945437,
+        "local_price_gap_k15": 0.5157613647888792,
+        "seconds": 6.108669699984603
+      },
+      "UMAP nn=50": {
+        "trustworthiness_k5": 0.9827946153846154,
+        "trustworthiness_k30": 0.97740727150402,
+        "local_price_gap_k15": 0.5267738068936418,
+        "seconds": 9.820743999996921
+      }
+    },
+    "shuffle_control": {
+      "trustworthiness_k5": 0.9788353044871795,
+      "local_price_gap_k15": 0.7491268042108647
+    },
+    "projection": {
+      "pca_test_shape": [
+        9777,
+        2
+      ],
+      "umap_has_transform": true,
+      "tsne_has_transform": false
+    },
+    "figures": [
+      "figure_11_pca_variance.png",
+      "figure_12_pca_scatter.png",
+      "figure_13_tsne.png",
+      "figure_14_umap.png",
+      "figure_15_shuffle_control.png"
+    ]
+  }
+}

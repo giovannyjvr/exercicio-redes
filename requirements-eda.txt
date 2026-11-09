@@ -1,0 +1,15 @@
+# Dependências extras do projeto de EDA (docs/projects/eda/).
+#
+# Ficam fora de requirements.txt pelo mesmo motivo do requirements-vae.txt: o
+# GitHub Actions apenas constrói o site e não precisa baixar numba/llvmlite, que
+# o umap-learn arrasta junto (~100 MB).
+#
+#   python -m pip install -r requirements.txt -r requirements-eda.txt
+#   python docs/projects/eda/code/run_eda.py
+
+# Download do dataset direto do Kaggle, sem credencial para datasets públicos.
+kagglehub
+packaging        # kagglehub importa packaging e não o declara
+
+# Redução de dimensionalidade não linear. Traz numba e llvmlite.
+umap-learn
