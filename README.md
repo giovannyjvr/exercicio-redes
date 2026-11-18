@@ -94,6 +94,30 @@ Z_train = prep.fit_transform(X_train)                 # aprende só no treino
 Z_test = prep.transform(X_test)
 ```
 
+## Projeto — entrega 2 (Regressão)
+
+Rede neural treinada sobre o **mesmo** dataset e o **mesmo split** do EDA, para
+prever `price`. Relatório em `docs/projects/regression/index.md`; código em
+`docs/projects/regression/code/`.
+
+A pipeline de pré-processamento **não é reescrita**: `run_regression.py` importa
+`nyc_preprocessing.py` da entrega de EDA.
+
+```bash
+python -m pip install -r requirements.txt -r requirements-regression.txt
+python docs/projects/regression/code/run_regression.py
+```
+
+`run_regression.py` executa as etapas 0–7 da rubrica (baselines, rede, treino com
+early stopping, busca de 12 configurações, avaliação no teste com 3 sementes e
+análise de erro), grava as 7 figuras em `figures/` e todos os números em
+`results/metrics.json`. Leva cerca de 30 minutos em CPU.
+
+| Arquivo | Papel |
+|---|---|
+| `nyc_regressor.py` | A MLP em PyTorch, o laço de treino com early stopping e as métricas. Importável. |
+| `run_regression.py` | Ponto de entrada único das etapas 0–7. |
+
 ## Preview local do site
 
 ```bash

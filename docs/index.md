@@ -49,11 +49,11 @@ Quem responde por este repositório. Os **exercícios são individuais**; a equi
 
 ### [Projeto](projects/index.md) — em equipe
 
-Um projeto, um dataset, três entregas:
+Um projeto, um dataset. Das três entregas previstas, este repositório traz as duas
+primeiras — a terceira (generativo) não será feita:
 
-- [ ] [EDA](projects/eda/index.md)
-- [ ] [Classificação](projects/classification/index.md) **ou** [Regressão](projects/regression/index.md)
-- [ ] [Generativo](projects/generative/index.md)
+- [x] [EDA](projects/eda/index.md)
+- [x] [Regressão](projects/regression/index.md)
 
 ## Checklist antes de cada entrega
 

@@ -1,0 +1,16 @@
+# Dependências extras da entrega 2 do projeto (docs/projects/regression/).
+#
+# Mesma lógica de requirements-eda.txt e requirements-vae.txt: fora do
+# requirements.txt porque o GitHub Actions só constrói o site e não precisa
+# baixar PyTorch.
+#
+#   python -m pip install -r requirements.txt -r requirements-regression.txt
+#   python docs/projects/regression/code/run_regression.py
+
+# Download do dataset (o mesmo do EDA), sem credencial para datasets públicos.
+kagglehub
+packaging        # kagglehub importa packaging e não o declara
+
+# A rede. Em máquina sem GPU as rodas de CPU bastam e são bem menores:
+#   python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch

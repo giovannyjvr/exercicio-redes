@@ -1,0 +1,1249 @@
+{
+  "random_state": 42,
+  "generated_in_seconds": 839.8,
+  "etapa_0": {
+    "target_filter": {
+      "rows_before": 48895,
+      "rows_dropped": 11,
+      "share_dropped": 0.0002249718785151856,
+      "rows_after": 48884
+    },
+    "split": {
+      "test_size": 0.2,
+      "val_size": 0.2,
+      "random_state": 42,
+      "n_train": 31285,
+      "n_val": 7822,
+      "n_test": 9777,
+      "n_train_full": 39107,
+      "train_price_mean": 153.34364711523094,
+      "train_price_median": 105.0,
+      "val_price_mean": 152.5208386601892,
+      "test_price_mean": 151.05901605809552
+    },
+    "pipeline_checks": {
+      "shape_train": [
+        31285,
+        91
+      ],
+      "shape_test": [
+        7822,
+        91
+      ],
+      "n_features_out": 91,
+      "feature_names": [
+        "heavy__minimum_nights",
+        "heavy__number_of_reviews",
+        "heavy__reviews_per_month",
+        "heavy__calculated_host_listings_count",
+        "plain__latitude",
+        "plain__longitude",
+        "plain__availability_365",
+        "plain__days_since_last_review",
+        "flag__never_reviewed",
+        "cat__neighbourhood_group_Bronx",
+        "cat__neighbourhood_group_Brooklyn",
+        "cat__neighbourhood_group_Manhattan",
+        "cat__neighbourhood_group_Queens",
+        "cat__neighbourhood_group_Staten Island",
+        "cat__room_type_Entire home/apt",
+        "cat__room_type_Private room",
+        "cat__room_type_Shared room",
+        "hicard__neighbourhood_Astoria",
+        "hicard__neighbourhood_Bay Ridge",
+        "hicard__neighbourhood_Bedford-Stuyvesant",
+        "hicard__neighbourhood_Boerum Hill",
+        "hicard__neighbourhood_Borough Park",
+        "hicard__neighbourhood_Brooklyn Heights",
+        "hicard__neighbourhood_Bushwick",
+        "hicard__neighbourhood_Canarsie",
+        "hicard__neighbourhood_Carroll Gardens",
+        "hicard__neighbourhood_Chelsea",
+        "hicard__neighbourhood_Chinatown",
+        "hicard__neighbourhood_Clinton Hill",
+        "hicard__neighbourhood_Cobble Hill",
+        "hicard__neighbourhood_Crown Heights",
+        "hicard__neighbourhood_Cypress Hills",
+        "hicard__neighbourhood_Ditmars Steinway",
+        "hicard__neighbourhood_Downtown Brooklyn",
+        "hicard__neighbourhood_East Elmhurst",
+        "hicard__neighbourhood_East Flatbush",
+        "hicard__neighbourhood_East Harlem",
+        "hicard__neighbourhood_East New York",
+        "hicard__neighbourhood_East Village",
+        "hicard__neighbourhood_Elmhurst",
+        "hicard__neighbourhood_Financial District",
+        "hicard__neighbourhood_Flatbush",
+        "hicard__neighbourhood_Flatiron District",
+        "hicard__neighbourhood_Flatlands",
+        "hicard__neighbourhood_Flushing",
+        "hicard__neighbourhood_Forest Hills",
+        "hicard__neighbourhood_Fort Greene",
+        "hicard__neighbourhood_Gowanus",
+        "hicard__neighbourhood_Gramercy",
+        "hicard__neighbourhood_Greenpoint",
+        "hicard__neighbourhood_Greenwich Village",
+        "hicard__neighbourhood_Harlem",
+        "hicard__neighbourhood_Hell's Kitchen",
+        "hicard__neighbourhood_Inwood",
+        "hicard__neighbourhood_Jackson Heights",
+        "hicard__neighbourhood_Jamaica",
+        "hicard__neighbourhood_Kensington",
+        "hicard__neighbourhood_Kips Bay",
+        "hicard__neighbourhood_Little Italy",
+        "hicard__neighbourhood_Long Island City",
+        "hicard__neighbourhood_Lower East Side",
+        "hicard__neighbourhood_Maspeth",
+        "hicard__neighbourhood_Midtown",
+        "hicard__neighbourhood_Midwood",
+        "hicard__neighbourhood_Morningside Heights",
+        "hicard__neighbourhood_Murray Hill",
+        "hicard__neighbourhood_NoHo",
+        "hicard__neighbourhood_Nolita",
+        "hicard__neighbourhood_Park Slope",
+        "hicard__neighbourhood_Prospect Heights",
+        "hicard__neighbourhood_Prospect-Lefferts Gardens",
+        "hicard__neighbourhood_Rego Park",
+        "hicard__neighbourhood_Richmond Hill",
+        "hicard__neighbourhood_Ridgewood",
+        "hicard__neighbourhood_Sheepshead Bay",
+        "hicard__neighbourhood_SoHo",
+        "hicard__neighbourhood_South Slope",
+        "hicard__neighbourhood_Springfield Gardens",
+        "hicard__neighbourhood_Sunnyside",
+        "hicard__neighbourhood_Sunset Park",
+        "hicard__neighbourhood_Theater District",
+        "hicard__neighbourhood_Tribeca",
+        "hicard__neighbourhood_Upper East Side",
+        "hicard__neighbourhood_Upper West Side",
+        "hicard__neighbourhood_Washington Heights",
+        "hicard__neighbourhood_West Village",
+        "hicard__neighbourhood_Williamsburg",
+        "hicard__neighbourhood_Windsor Terrace",
+        "hicard__neighbourhood_Woodhaven",
+        "hicard__neighbourhood_Woodside",
+        "hicard__neighbourhood_infrequent_sklearn"
+      ],
+      "nan_train": 0,
+      "nan_test": 0,
+      "max_abs_mean_train_scaled": 2.0107744780400272e-13,
+      "max_abs_mean_test_scaled": 0.01137528441621085,
+      "columns_match": true
+    },
+    "success_criterion": {
+      "main_metric": "MAE em dólares no conjunto de teste",
+      "rule": "MAE ao menos 15 % menor que o do melhor baseline",
+      "threshold_ratio": 0.85
+    },
+    "n_features": 91
+  },
+  "etapa_1_baselines": {
+    "results": {
+      "Dummy (média)": {
+        "mae": 91.43559925131359,
+        "rmse": 209.33954406145975,
+        "r2": -1.5449045528859173e-05,
+        "mape": 89.09663140305783,
+        "median_ae": 71.65635288476906,
+        "n": 7822
+      },
+      "Dummy (mediana)": {
+        "mae": 83.24443876246484,
+        "rmse": 214.66391825612868,
+        "r2": -0.05153144902463702,
+        "mape": 56.41874719809369,
+        "median_ae": 45.0,
+        "n": 7822
+      },
+      "Mediana por room_type × borough": {
+        "mae": 64.02959601125032,
+        "rmse": 200.54068096348655,
+        "r2": 0.08228224905547998,
+        "mape": 37.42906408786051,
+        "median_ae": 30.0,
+        "n": 7822
+      },
+      "Ridge (log1p)": {
+        "mae": 59.675849022461406,
+        "rmse": 192.9391665556121,
+        "r2": 0.1505360401560224,
+        "mape": 35.180350559354295,
+        "median_ae": 26.839655788953287,
+        "n": 7822
+      },
+      "HistGradientBoosting (log1p)": {
+        "mae": 55.91723249241816,
+        "rmse": 183.81859346101413,
+        "r2": 0.22894911708456067,
+        "mape": 32.88460057058393,
+        "median_ae": 24.156575172853877,
+        "n": 7822
+      }
+    },
+    "best_name": "HistGradientBoosting (log1p)",
+    "best_mae_val": 55.91723249241816,
+    "target_mae": 47.52964761855543
+  },
+  "etapa_2_3_network": {
+    "architecture": "91–256–128–1",
+    "hidden": [
+      256,
+      128
+    ],
+    "n_parameters": 56577,
+    "params_per_row": 1.8084385488253156,
+    "config": {
+      "learning_rate": 0.001,
+      "batch_size": 256,
+      "max_epochs": 200,
+      "patience": 15,
+      "weight_decay": 0.0,
+      "loss": "mse",
+      "optimizer": "adamw",
+      "seed": 42
+    },
+    "best_epoch": 12,
+    "epochs_run": 27,
+    "stopped_early": true,
+    "best_val_loss": 0.2045745849609375,
+    "train_loss_at_best": 0.18479847208044106,
+    "val_minus_train_loss_at_best": 0.019776112880496438,
+    "val_metrics": {
+      "mae": 57.83194850564643,
+      "rmse": 189.08204133340664,
+      "r2": 0.18416050441709664,
+      "mape": 33.539758699136385,
+      "median_ae": 25.34532928466797,
+      "n": 7822
+    },
+    "history": {
+      "train_loss": [
+        1.5020659853089098,
+        0.2645764843012857,
+        0.2282640526531717,
+        0.21157640604159694,
+        0.20382107460443558,
+        0.1978586676537238,
+        0.19491425447519622,
+        0.19144130089573724,
+        0.1901734757710612,
+        0.18837462798873134,
+        0.18470821411956018,
+        0.18479847208044106,
+        0.1821404542988894,
+        0.18039952678237076,
+        0.17986106806066599,
+        0.1800740127741519,
+        0.17767088810094767,
+        0.1775065027335705,
+        0.1765566496502692,
+        0.17515244384733694,
+        0.1732060672896004,
+        0.1738225479085586,
+        0.17080701308088864,
+        0.17145875366123337,
+        0.1691953576352243,
+        0.16753850756065714,
+        0.1683814448981272
+      ],
+      "val_loss": [
+        0.31310155987739563,
+        0.2541189193725586,
+        0.22865557670593262,
+        0.2204483300447464,
+        0.21465778350830078,
+        0.21238486468791962,
+        0.20866356790065765,
+        0.2179672122001648,
+        0.20573866367340088,
+        0.2077948898077011,
+        0.20844942331314087,
+        0.2045745849609375,
+        0.2105632722377777,
+        0.20673614740371704,
+        0.2059820294380188,
+        0.2077135145664215,
+        0.20519721508026123,
+        0.21344098448753357,
+        0.2127276360988617,
+        0.20465944707393646,
+        0.20540110766887665,
+        0.21722617745399475,
+        0.2157641053199768,
+        0.2060745805501938,
+        0.20986102521419525,
+        0.2135225385427475,
+        0.2144346833229065
+      ],
+      "val_mae_log": [
+        0.4188465178012848,
+        0.3734120726585388,
+        0.3477042615413666,
+        0.33990728855133057,
+        0.3397206664085388,
+        0.33927878737449646,
+        0.3309265673160553,
+        0.35018566250801086,
+        0.32833540439605713,
+        0.336149662733078,
+        0.3294132351875305,
+        0.32548409700393677,
+        0.3401097357273102,
+        0.3263096809387207,
+        0.3261813521385193,
+        0.3258725702762604,
+        0.331149160861969,
+        0.33129656314849854,
+        0.3414957523345947,
+        0.3241612911224365,
+        0.3275816738605499,
+        0.3349672257900238,
+        0.3334783613681793,
+        0.3296275734901428,
+        0.32951295375823975,
+        0.34212198853492737,
+        0.33460238575935364
+      ]
+    },
+    "seconds": 12.788060099992435,
+    "figures": [
+      "figure_01_learning_curves.png"
+    ]
+  },
+  "etapa_4_tuning": {
+    "losses": [
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "mse",
+        "huber_delta": null,
+        "n_parameters": 56577,
+        "best_epoch": 12,
+        "epochs_run": 24,
+        "val_mae": 57.83194850564643,
+        "val_rmse": 189.08204133340664,
+        "val_r2": 0.18416050441709664,
+        "train_mae": 56.720875349345064,
+        "overfit_gap_mae": 1.1110731563013658,
+        "seconds": 10.618515099980868,
+        "name": "mse"
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 16,
+        "epochs_run": 28,
+        "val_mae": 57.005244230681505,
+        "val_rmse": 191.77416887912142,
+        "val_r2": 0.16076346887518578,
+        "train_mae": 55.160729020240495,
+        "overfit_gap_mae": 1.8445152104410099,
+        "seconds": 11.69623380000121,
+        "name": "huber"
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "mae",
+        "huber_delta": null,
+        "n_parameters": 56577,
+        "best_epoch": 25,
+        "epochs_run": 37,
+        "val_mae": 57.36776070971527,
+        "val_rmse": 190.85509065240615,
+        "val_r2": 0.16878827994414403,
+        "train_mae": 53.812796843743506,
+        "overfit_gap_mae": 3.5549638659717644,
+        "seconds": 17.480565300007584,
+        "name": "mae"
+      }
+    ],
+    "chosen_loss": "huber",
+    "huber_delta": 0.5,
+    "regularization": [
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 16,
+        "epochs_run": 28,
+        "val_mae": 57.005244230681505,
+        "val_rmse": 191.77416887912142,
+        "val_r2": 0.16076346887518578,
+        "train_mae": 55.160729020240495,
+        "overfit_gap_mae": 1.8445152104410099,
+        "seconds": 12.381282499991357,
+        "name": "sem regularização"
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.2,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 68,
+        "epochs_run": 80,
+        "val_mae": 56.57904293823047,
+        "val_rmse": 190.38593231532553,
+        "val_r2": 0.17286981213361785,
+        "train_mae": 55.42062932581914,
+        "overfit_gap_mae": 1.15841361241133,
+        "seconds": 52.551193699997384,
+        "name": "dropout 0.2"
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0001,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 16,
+        "epochs_run": 28,
+        "val_mae": 57.01446552954498,
+        "val_rmse": 191.6079866340237,
+        "val_r2": 0.16221732248205412,
+        "train_mae": 55.144870279405716,
+        "overfit_gap_mae": 1.8695952501392625,
+        "seconds": 12.738199299987173,
+        "name": "weight decay 1e-4"
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": true,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 57345,
+        "best_epoch": 24,
+        "epochs_run": 36,
+        "val_mae": 57.70272217952696,
+        "val_rmse": 188.42051486239174,
+        "val_r2": 0.18985914524687753,
+        "train_mae": 52.634904345731414,
+        "overfit_gap_mae": 5.067817833795544,
+        "seconds": 18.398266999982297,
+        "name": "batch norm"
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.2,
+        "batch_norm": false,
+        "weight_decay": 0.0001,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 80,
+        "epochs_run": 92,
+        "val_mae": 56.63926638864368,
+        "val_rmse": 189.42233779603973,
+        "val_r2": 0.18122128163917695,
+        "train_mae": 54.883359844127895,
+        "overfit_gap_mae": 1.7559065445157813,
+        "seconds": 58.31705690000672,
+        "name": "dropout 0.2 + wd 1e-4"
+      }
+    ],
+    "search": [
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.2,
+        "batch_norm": false,
+        "weight_decay": 0.0001,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 80,
+        "epochs_run": 92,
+        "val_mae": 56.63926638864368,
+        "val_rmse": 189.42233779603973,
+        "val_r2": 0.18122128163917695,
+        "train_mae": 54.883359844127895,
+        "overfit_gap_mae": 1.7559065445157813,
+        "seconds": 57.45497150000301,
+        "label": "256–128 | lr 0.001 | dropout+wd"
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.2,
+        "batch_norm": false,
+        "weight_decay": 0.0001,
+        "learning_rate": 0.0003,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 111,
+        "epochs_run": 123,
+        "val_mae": 56.65504620526947,
+        "val_rmse": 191.4860256194259,
+        "val_r2": 0.16328350253756585,
+        "train_mae": 56.32234098096997,
+        "overfit_gap_mae": 0.33270522429950233,
+        "seconds": 77.16729570002644,
+        "label": "256–128 | lr 0.0003 | dropout+wd"
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.0003,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 39,
+        "epochs_run": 51,
+        "val_mae": 56.955018167390875,
+        "val_rmse": 190.29239460777228,
+        "val_r2": 0.17368236015165606,
+        "train_mae": 53.761882055562126,
+        "overfit_gap_mae": 3.19313611182875,
+        "seconds": 21.601247399987187,
+        "label": "256–128 | lr 0.0003 | sem reg."
+      },
+      {
+        "hidden": [
+          512,
+          256,
+          128
+        ],
+        "dropout": 0.2,
+        "batch_norm": false,
+        "weight_decay": 0.0001,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 211457,
+        "best_epoch": 24,
+        "epochs_run": 36,
+        "val_mae": 56.963161930834296,
+        "val_rmse": 193.74674523506812,
+        "val_r2": 0.14341001492187777,
+        "train_mae": 56.80505589092999,
+        "overfit_gap_mae": 0.15810603990430394,
+        "seconds": 43.92635279998649,
+        "label": "512–256–128 | lr 0.001 | dropout+wd"
+      },
+      {
+        "hidden": [
+          512,
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.0003,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 211457,
+        "best_epoch": 20,
+        "epochs_run": 32,
+        "val_mae": 56.994972711327556,
+        "val_rmse": 189.97751318778165,
+        "val_r2": 0.17641475310180865,
+        "train_mae": 53.12884204499311,
+        "overfit_gap_mae": 3.866130666334449,
+        "seconds": 22.034429499995895,
+        "label": "512–256–128 | lr 0.0003 | sem reg."
+      },
+      {
+        "hidden": [
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 56577,
+        "best_epoch": 16,
+        "epochs_run": 28,
+        "val_mae": 57.005244230681505,
+        "val_rmse": 191.77416887912142,
+        "val_r2": 0.16076346887518578,
+        "train_mae": 55.160729020240495,
+        "overfit_gap_mae": 1.8445152104410099,
+        "seconds": 11.365254900010768,
+        "label": "256–128 | lr 0.001 | sem reg."
+      },
+      {
+        "hidden": [
+          128
+        ],
+        "dropout": 0.2,
+        "batch_norm": false,
+        "weight_decay": 0.0001,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 11905,
+        "best_epoch": 86,
+        "epochs_run": 98,
+        "val_mae": 57.08413080436377,
+        "val_rmse": 191.53585560746555,
+        "val_r2": 0.16284797208212176,
+        "train_mae": 56.63282010641002,
+        "overfit_gap_mae": 0.451310697953744,
+        "seconds": 39.08377989998553,
+        "label": "128 | lr 0.001 | dropout+wd"
+      },
+      {
+        "hidden": [
+          128
+        ],
+        "dropout": 0.2,
+        "batch_norm": false,
+        "weight_decay": 0.0001,
+        "learning_rate": 0.0003,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 11905,
+        "best_epoch": 114,
+        "epochs_run": 126,
+        "val_mae": 57.16669982938442,
+        "val_rmse": 191.7147238984692,
+        "val_r2": 0.16128367102333596,
+        "train_mae": 57.25609941170089,
+        "overfit_gap_mae": -0.08939958231646727,
+        "seconds": 49.73195869999472,
+        "label": "128 | lr 0.0003 | dropout+wd"
+      },
+      {
+        "hidden": [
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 11905,
+        "best_epoch": 47,
+        "epochs_run": 59,
+        "val_mae": 57.17923934744374,
+        "val_rmse": 190.38177753610492,
+        "val_r2": 0.17290591255109877,
+        "train_mae": 55.10304147702961,
+        "overfit_gap_mae": 2.076197870414127,
+        "seconds": 18.948543100006646,
+        "label": "128 | lr 0.001 | sem reg."
+      },
+      {
+        "hidden": [
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.0003,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 11905,
+        "best_epoch": 76,
+        "epochs_run": 88,
+        "val_mae": 57.292166480442596,
+        "val_rmse": 191.34631240064002,
+        "val_r2": 0.16450403764359822,
+        "train_mae": 55.93902483167827,
+        "overfit_gap_mae": 1.3531416487643284,
+        "seconds": 29.758203900011722,
+        "label": "128 | lr 0.0003 | sem reg."
+      },
+      {
+        "hidden": [
+          512,
+          256,
+          128
+        ],
+        "dropout": 0.0,
+        "batch_norm": false,
+        "weight_decay": 0.0,
+        "learning_rate": 0.001,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 211457,
+        "best_epoch": 6,
+        "epochs_run": 18,
+        "val_mae": 57.70149406402869,
+        "val_rmse": 191.87958915885784,
+        "val_r2": 0.15984054095909017,
+        "train_mae": 56.420676467844295,
+        "overfit_gap_mae": 1.2808175961843915,
+        "seconds": 12.002959300007205,
+        "label": "512–256–128 | lr 0.001 | sem reg."
+      },
+      {
+        "hidden": [
+          512,
+          256,
+          128
+        ],
+        "dropout": 0.2,
+        "batch_norm": false,
+        "weight_decay": 0.0001,
+        "learning_rate": 0.0003,
+        "loss": "huber",
+        "huber_delta": 0.5,
+        "n_parameters": 211457,
+        "best_epoch": 69,
+        "epochs_run": 81,
+        "val_mae": 58.1095485682379,
+        "val_rmse": 194.62295677332307,
+        "val_r2": 0.13564471076524798,
+        "train_mae": 57.50404699196616,
+        "overfit_gap_mae": 0.6055015762717346,
+        "seconds": 93.16888290000497,
+        "label": "512–256–128 | lr 0.0003 | dropout+wd"
+      }
+    ],
+    "n_configurations": 12,
+    "best": {
+      "hidden": [
+        256,
+        128
+      ],
+      "dropout": 0.2,
+      "batch_norm": false,
+      "weight_decay": 0.0001,
+      "learning_rate": 0.001,
+      "loss": "huber",
+      "huber_delta": 0.5,
+      "n_parameters": 56577,
+      "best_epoch": 80,
+      "epochs_run": 92,
+      "val_mae": 56.63926638864368,
+      "val_rmse": 189.42233779603973,
+      "val_r2": 0.18122128163917695,
+      "train_mae": 54.883359844127895,
+      "overfit_gap_mae": 1.7559065445157813,
+      "seconds": 57.45497150000301,
+      "label": "256–128 | lr 0.001 | dropout+wd"
+    },
+    "figures": [
+      "figure_02_regularization.png",
+      "figure_03_hyperparameter_search.png"
+    ]
+  },
+  "etapa_5_test": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "runs": [
+      {
+        "seed": 42,
+        "best_epoch": 80,
+        "epochs_run": 92,
+        "test": {
+          "mae": 56.78189822717155,
+          "rmse": 183.03378414578603,
+          "r2": 0.16321788690584782,
+          "mape": 32.38768558644545,
+          "median_ae": 23.613243103027344,
+          "n": 9777
+        },
+        "test_log": {
+          "mae_log": 0.31724507021480036,
+          "rmse_log": 0.45003718583756597,
+          "r2_log": 0.5782607665685551
+        },
+        "train": {
+          "mae": 54.883359844127895,
+          "rmse": 240.10760999093452,
+          "r2": 0.13511766556933325,
+          "mape": 28.6321753259052,
+          "median_ae": 21.340721130371094,
+          "n": 31285
+        },
+        "val": {
+          "mae": 56.63926638864368,
+          "rmse": 189.42233779603973,
+          "r2": 0.18122128163917695,
+          "mape": 32.82845629547783,
+          "median_ae": 24.324291229248047,
+          "n": 7822
+        }
+      },
+      {
+        "seed": 43,
+        "best_epoch": 60,
+        "epochs_run": 72,
+        "test": {
+          "mae": 56.57543966011047,
+          "rmse": 183.3809083348567,
+          "r2": 0.1600409570301694,
+          "mape": 31.545640961030607,
+          "median_ae": 23.223220825195312,
+          "n": 9777
+        },
+        "test_log": {
+          "mae_log": 0.31689641314750444,
+          "rmse_log": 0.4523149455444238,
+          "r2_log": 0.5739808908462276
+        },
+        "train": {
+          "mae": 55.38042188933697,
+          "rmse": 241.90466697111611,
+          "r2": 0.12212299947414462,
+          "mape": 28.418141400818453,
+          "median_ae": 21.291671752929688,
+          "n": 31285
+        },
+        "val": {
+          "mae": 56.37797957215276,
+          "rmse": 190.64764684889138,
+          "r2": 0.17059421565877697,
+          "mape": 31.765100135839607,
+          "median_ae": 23.122753143310547,
+          "n": 7822
+        }
+      },
+      {
+        "seed": 44,
+        "best_epoch": 56,
+        "epochs_run": 68,
+        "test": {
+          "mae": 56.72886421271503,
+          "rmse": 184.1864830292278,
+          "r2": 0.15264502924117984,
+          "mape": 31.768227305219977,
+          "median_ae": 23.52808380126953,
+          "n": 9777
+        },
+        "test_log": {
+          "mae_log": 0.318223830900999,
+          "rmse_log": 0.45385011492380983,
+          "r2_log": 0.5710841421786705
+        },
+        "train": {
+          "mae": 55.89617428297202,
+          "rmse": 242.2937026012776,
+          "r2": 0.1192970923910639,
+          "mape": 28.91644617617673,
+          "median_ae": 21.752304077148438,
+          "n": 31285
+        },
+        "val": {
+          "mae": 56.80435191929661,
+          "rmse": 190.55888304571445,
+          "r2": 0.1713663633808149,
+          "mape": 32.08071256323454,
+          "median_ae": 23.44029998779297,
+          "n": 7822
+        }
+      }
+    ],
+    "network_test": {
+      "mae": {
+        "mean": 56.69540069999902,
+        "std": 0.10722005405100354
+      },
+      "rmse": {
+        "mean": 183.53372516995685,
+        "std": 0.5913488122838196
+      },
+      "r2": {
+        "mean": 0.15863462439239903,
+        "std": 0.005424910913128045
+      },
+      "mape": {
+        "mean": 31.900517950898678,
+        "std": 0.43633175336900654
+      },
+      "median_ae": {
+        "mean": 23.454849243164062,
+        "std": 0.20506540341315257
+      }
+    },
+    "baselines_test": {
+      "Dummy (média)": {
+        "mae": 91.34594726913937,
+        "rmse": 200.1028952817336,
+        "r2": -0.00013037130820192644,
+        "mape": 90.7088484871491,
+        "median_ae": 73.34364711523094,
+        "n": 9777
+      },
+      "Dummy (mediana)": {
+        "mae": 82.73243326173673,
+        "rmse": 205.3226293453917,
+        "r2": -0.05298820197081744,
+        "mape": 57.25938408706993,
+        "median_ae": 45.0,
+        "n": 9777
+      },
+      "Mediana por room_type × borough": {
+        "mae": 63.529968292932395,
+        "rmse": 192.1969313021511,
+        "r2": 0.07733771332971262,
+        "mape": 37.08904782161409,
+        "median_ae": 29.0,
+        "n": 9777
+      },
+      "Ridge (log1p)": {
+        "mae": 59.41591297553612,
+        "rmse": 185.90435635313048,
+        "r2": 0.13676507151024153,
+        "mape": 34.803318662527886,
+        "median_ae": 26.423919252270025,
+        "n": 9777
+      },
+      "HistGradientBoosting (log1p)": {
+        "mae": 56.31061938641179,
+        "rmse": 179.1870454209968,
+        "r2": 0.19802083079046184,
+        "mape": 32.52109409539377,
+        "median_ae": 24.350737103017693,
+        "n": 9777
+      }
+    },
+    "best_baseline_name": "HistGradientBoosting (log1p)",
+    "best_baseline_mae": 56.31061938641179,
+    "best_required_baseline_name": "Ridge (log1p)",
+    "best_required_baseline_mae": 59.41591297553612,
+    "improvement_vs_required": 0.04578760367878629,
+    "improvement_ratio": -0.006833192704679853,
+    "gap_vs_std": -3.5887065809927323,
+    "criterion_met": false,
+    "chosen_config": {
+      "hidden": [
+        256,
+        128
+      ],
+      "dropout": 0.2,
+      "batch_norm": false,
+      "weight_decay": 0.0001,
+      "learning_rate": 0.001,
+      "loss": "huber",
+      "huber_delta": 0.5,
+      "n_parameters": 56577,
+      "label": "256–128 | lr 0.001 | dropout+wd"
+    },
+    "figures": [
+      "figure_04_predicted_vs_actual.png",
+      "figure_05_residuals.png"
+    ]
+  },
+  "etapa_6_errors": {
+    "subgroups": {
+      "room_type": {
+        "Entire home/apt": {
+          "n": 5039,
+          "mae": 80.2737,
+          "mediana_price": 160.0
+        },
+        "Shared room": {
+          "n": 226,
+          "mae": 36.0646,
+          "mediana_price": 45.0
+        },
+        "Private room": {
+          "n": 4512,
+          "mae": 31.584,
+          "mediana_price": 70.0
+        }
+      },
+      "neighbourhood_group": {
+        "Manhattan": {
+          "n": 4316,
+          "mae": 72.057,
+          "mediana_price": 149.0
+        },
+        "Staten Island": {
+          "n": 81,
+          "mae": 60.9419,
+          "mediana_price": 67.0
+        },
+        "Brooklyn": {
+          "n": 4036,
+          "mae": 47.2342,
+          "mediana_price": 92.0
+        },
+        "Queens": {
+          "n": 1120,
+          "mae": 37.7154,
+          "mediana_price": 75.0
+        },
+        "Bronx": {
+          "n": 224,
+          "mae": 28.3204,
+          "mediana_price": 64.5
+        }
+      },
+      "faixa_de_preco": {
+        "até 69": {
+          "n": 2509,
+          "mae": 16.8454,
+          "mape": 38.3354,
+          "vies_medio": 14.2155
+        },
+        "69–106": {
+          "n": 2374,
+          "mae": 26.8941,
+          "mape": 30.7974,
+          "vies_medio": 12.9755
+        },
+        "106–175": {
+          "n": 2449,
+          "mae": 37.3733,
+          "mape": 27.1844,
+          "vies_medio": 8.5945
+        },
+        "acima de 175": {
+          "n": 2445,
+          "mae": 146.224,
+          "mape": 33.0402,
+          "vies_medio": -127.7796
+        }
+      }
+    },
+    "worst_examples": [
+      {
+        "price": 8000.0,
+        "pred": 374.403503418,
+        "abs_error": 7625.5965,
+        "room_type": "Entire home/apt",
+        "neighbourhood_group": "Brooklyn",
+        "neighbourhood": "Clinton Hill",
+        "minimum_nights": 1,
+        "availability_365": 365
+      },
+      {
+        "price": 5000.0,
+        "pred": 108.5627975464,
+        "abs_error": 4891.4371,
+        "room_type": "Entire home/apt",
+        "neighbourhood_group": "Brooklyn",
+        "neighbourhood": "Bedford-Stuyvesant",
+        "minimum_nights": 2,
+        "availability_365": 0
+      },
+      {
+        "price": 4100.0,
+        "pred": 222.9237060547,
+        "abs_error": 3877.0763,
+        "room_type": "Entire home/apt",
+        "neighbourhood_group": "Manhattan",
+        "neighbourhood": "Hell's Kitchen",
+        "minimum_nights": 30,
+        "availability_365": 180
+      },
+      {
+        "price": 3750.0,
+        "pred": 225.8771972656,
+        "abs_error": 3524.1228,
+        "room_type": "Entire home/apt",
+        "neighbourhood_group": "Manhattan",
+        "neighbourhood": "East Village",
+        "minimum_nights": 1,
+        "availability_365": 0
+      },
+      {
+        "price": 2850.0,
+        "pred": 102.8864974976,
+        "abs_error": 2747.1135,
+        "room_type": "Private room",
+        "neighbourhood_group": "Manhattan",
+        "neighbourhood": "West Village",
+        "minimum_nights": 100,
+        "availability_365": 270
+      },
+      {
+        "price": 2990.0,
+        "pred": 280.5267028809,
+        "abs_error": 2709.4733,
+        "room_type": "Entire home/apt",
+        "neighbourhood_group": "Manhattan",
+        "neighbourhood": "Nolita",
+        "minimum_nights": 2,
+        "availability_365": 237
+      },
+      {
+        "price": 2800.0,
+        "pred": 146.1622924805,
+        "abs_error": 2653.8377,
+        "room_type": "Private room",
+        "neighbourhood_group": "Manhattan",
+        "neighbourhood": "Chelsea",
+        "minimum_nights": 1,
+        "availability_365": 89
+      },
+      {
+        "price": 3000.0,
+        "pred": 360.3840026855,
+        "abs_error": 2639.616,
+        "room_type": "Entire home/apt",
+        "neighbourhood_group": "Manhattan",
+        "neighbourhood": "Theater District",
+        "minimum_nights": 1,
+        "availability_365": 311
+      },
+      {
+        "price": 3000.0,
+        "pred": 410.7302856445,
+        "abs_error": 2589.2697,
+        "room_type": "Entire home/apt",
+        "neighbourhood_group": "Manhattan",
+        "neighbourhood": "SoHo",
+        "minimum_nights": 7,
+        "availability_365": 325
+      },
+      {
+        "price": 2900.0,
+        "pred": 355.3884887695,
+        "abs_error": 2544.6115,
+        "room_type": "Entire home/apt",
+        "neighbourhood_group": "Manhattan",
+        "neighbourhood": "Upper West Side",
+        "minimum_nights": 1,
+        "availability_365": 180
+      }
+    ],
+    "permutation_importance": [
+      {
+        "feature": "room_type (3 colunas)",
+        "n_columns": 3,
+        "delta_mae_mean": 26.707137370274154,
+        "delta_mae_std": 0.41672425169191635
+      },
+      {
+        "feature": "minimum_nights",
+        "n_columns": 1,
+        "delta_mae_mean": 7.662709589865284,
+        "delta_mae_std": 0.1248810619732518
+      },
+      {
+        "feature": "availability_365",
+        "n_columns": 1,
+        "delta_mae_mean": 7.098556337914968,
+        "delta_mae_std": 0.2856089760745731
+      },
+      {
+        "feature": "neighbourhood (74 colunas)",
+        "n_columns": 74,
+        "delta_mae_mean": 6.225018007448642,
+        "delta_mae_std": 0.2620735873651913
+      },
+      {
+        "feature": "longitude",
+        "n_columns": 1,
+        "delta_mae_mean": 5.7001318544111275,
+        "delta_mae_std": 0.29580594832204243
+      },
+      {
+        "feature": "latitude",
+        "n_columns": 1,
+        "delta_mae_mean": 5.685631186588436,
+        "delta_mae_std": 0.24552836316328605
+      },
+      {
+        "feature": "neighbourhood_group (5 colunas)",
+        "n_columns": 5,
+        "delta_mae_mean": 5.119755215450979,
+        "delta_mae_std": 0.18470550781542888
+      },
+      {
+        "feature": "calculated_host_listings_count",
+        "n_columns": 1,
+        "delta_mae_mean": 3.2203917795238324,
+        "delta_mae_std": 0.13055703562317642
+      },
+      {
+        "feature": "number_of_reviews",
+        "n_columns": 1,
+        "delta_mae_mean": 2.6035916707120066,
+        "delta_mae_std": 0.1262288435011772
+      },
+      {
+        "feature": "reviews_per_month",
+        "n_columns": 1,
+        "delta_mae_mean": 1.8401454263744186,
+        "delta_mae_std": 0.04339354645096219
+      },
+      {
+        "feature": "never_reviewed",
+        "n_columns": 1,
+        "delta_mae_mean": 0.7573828632585873,
+        "delta_mae_std": 0.04790199673949468
+      },
+      {
+        "feature": "days_since_last_review",
+        "n_columns": 1,
+        "delta_mae_mean": 0.6677848205819984,
+        "delta_mae_std": 0.0816667778460634
+      }
+    ],
+    "worst_subgroup": [
+      "Entire home/apt",
+      80.2737
+    ],
+    "figures": [
+      "figure_06_error_by_subgroup.png",
+      "figure_07_permutation_importance.png"
+    ]
+  }
+}

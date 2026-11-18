@@ -4,8 +4,16 @@
 
     [Projects](https://insper.github.io/ann-dl/){:target='_blank'}
 
-O projeto é **um só**, feito em equipe sobre **o mesmo dataset**, e entregue em três partes
-ao longo do semestre, cada uma com data e peso próprios.
+O projeto é **um só**, feito em equipe sobre **o mesmo dataset**, e entregue em partes ao
+longo do semestre, cada uma com data e peso próprios.
+
+!!! warning "Este repositório entrega duas das três partes"
+
+    A disciplina prevê três entregas: EDA, classificação **ou** regressão, e generativo.
+    Aqui estão as **duas primeiras**. A pasta de classificação saiu porque a equipe escolheu
+    regressão — é o que o enunciado manda fazer. A de **generativo foi removida em
+    18/11/2026 por decisão da equipe**, que não fará a terceira entrega; ela não estava
+    começada e continua recuperável no commit `55c41c5`.
 
 ## Equipe
 
@@ -31,13 +39,12 @@ ao longo do semestre, cada uma com data e peso próprios.
 Times de 2 a 3 pessoas. Repita esses nomes no cabeçalho de cada entrega — quem corrige pode
 abrir uma página sozinha, sem passar por aqui.
 
-## As três entregas
+## As entregas
 
 | # | Entrega | Página |
 |---|---------|--------|
 | 1 | EDA | [EDA](eda/index.md) |
-| 2 | Classificação **ou** Regressão | [Classificação](classification/index.md) · [Regressão](regression/index.md) |
-| 3 | Generativo | [Generativo](generative/index.md) |
+| 2 | **Regressão** (escolhida) | [Regressão](regression/index.md) |
 
 Datas e pesos são da sua edição — veja o
 [overview](https://insper.github.io/ann-dl/){:target='_blank'}.
@@ -48,16 +55,16 @@ Datas e pesos são da sua edição — veja o
     entregou. Escreva os relatórios de modo que você consiga defendê-los meses depois, e
     confira no overview da sua edição como a prova entra na nota.
 
-!!! warning "Escolha uma: classificação ou regressão"
+!!! success "Escolha feita: regressão"
 
-    A segunda entrega é **uma das duas**, não as duas. Este template traz as duas pastas
-    para você escolher; depois de decidir, apague a que não vai usar — da pasta `docs/projects/`
-    **e** da `nav` no `mkdocs.yml`.
+    A segunda entrega é **uma das duas**. Como o alvo `price` é contínuo, a equipe escolheu
+    **regressão**; a pasta `docs/projects/classification/` e a linha correspondente da `nav`
+    foram removidas em 18/11/2026.
 
 ## Dataset
 
-O mesmo dataset atravessa as três entregas — escolhê-lo bem no EDA é o que torna as outras
-duas viáveis.
+O mesmo dataset atravessa as duas entregas — escolhê-lo bem no EDA é o que torna a
+regressão viável.
 
 | | |
 |---|---|
@@ -87,8 +94,7 @@ problemas que a rede vai sentir e que o EDA precisa resolver antes.
 ## Status
 
 - [x] **1. EDA**
-- [ ] **2. Classificação ou Regressão**
-- [ ] **3. Generativo**
+- [x] **2. Regressão**
 
 ## Registro de decisões
 
@@ -103,3 +109,7 @@ projeto.
 | 2026-11-05 | Remover as 11 linhas com `price = 0` | Diária de zero dólar não é observação da grandeza que se quer prever. Efeito documentado na seção 1C do EDA. |
 | 2026-11-05 | Descartar `id`, `host_id`, `name`, `host_name` | Identificadores e texto livre; a justificativa de cada um está na seção 1B do EDA. |
 | 2026-11-05 | Pendente: apagar a pasta de **classificação** | A segunda entrega é uma só. Com a tarefa definida como regressão, `docs/projects/classification/` e a linha correspondente na `nav` devem sair — não foram apagadas aqui para não remover trabalho sem confirmação. |
+| 2026-11-18 | Pasta de classificação **removida** | Confirmado: ela só continha o template, sem nenhum trabalho (conferido no histórico do Git). A `nav` do `mkdocs.yml` ficou com uma única linha para a entrega 2. |
+| 2026-11-18 | Entrega 2: treinar sobre `log1p(price)` | O EDA mediu que 2,14 % dos anúncios respondem por 86,1 % da soma dos desvios quadráticos. As métricas voltam para dólares com `expm1`. |
+| 2026-11-18 | Entrega 3 (**generativo**) não será feita; pasta removida | Decisão da equipe. A pasta só tinha o template, sem trabalho; sai também da `nav` e dos checklists. Recuperável no commit `55c41c5` se a decisão mudar. |
+| 2026-11-18 | Validação separada de dentro do treino (80/20 do treino) | O split externo continua o do EDA, com a mesma semente. A pipeline passa a ser ajustada só no sub-treino, o que reduz as colunas de 106 para 91 — menos bairros alcançam `min_frequency = 50`. |
