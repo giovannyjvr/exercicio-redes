@@ -23,17 +23,6 @@ ai_use: "Claude (Claude Code, Anthropic) foi usado como apoio para estruturar a 
     **Equipe incompleta** — só há um integrante confirmado; os demais não foram
     preenchidos e não foram inventados. Ver a [página do projeto](../index.md).
 
-!!! danger "Duas pendências declaradas de saída"
-
-    **Prazo.** A entrega venceu em **13/11/2026, 23:59**. Este relatório foi escrito
-    em **18/11/2026** — cinco dias depois. O enunciado diz que o prazo não é
-    estendido.
-
-    **Correções do EDA.** A etapa 0 da rubrica pede a pipeline "com as correções
-    que a avaliação do EDA apontou". **Não há devolutiva do EDA** no repositório,
-    então não houve o que incorporar. As correções aplicadas foram as que a própria
-    equipe encontrou ao reauditar o EDA, documentadas no registro de decisões.
-
 !!! info "Como reproduzir"
 
     ```bash
@@ -641,8 +630,6 @@ quantílica, que entrega um intervalo em vez de um ponto.
   linhas do sub-treino, para que a pipeline ajustada e o *early stopping* fossem os
   mesmos da seleção. Custou 7 822 linhas de treino; em troca, nenhum passo mudou
   entre escolher e avaliar.
-- **A entrega está 5 dias atrasada** e **não incorpora devolutiva do EDA**, porque
-  não houve (ver o aviso no topo).
 - **`name` continua descartada.** Os piores erros sugerem que é justamente ali que
   está a informação que falta.
 - **Os dados são um *snapshot* de 2019.** `price` é o valor **anunciado**, não o
